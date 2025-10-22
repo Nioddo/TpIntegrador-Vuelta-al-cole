@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.43, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: Cole_vueltas_Database
+-- Host: 127.0.0.1    Database: DB_Colevueltas
 -- ------------------------------------------------------
 -- Server version	8.0.43-0ubuntu0.24.04.2
 
@@ -16,32 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `calificaciones`
---
-
-DROP TABLE IF EXISTS `calificaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `calificaciones` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_venta` int NOT NULL,
-  `id_usuario_calificador` int NOT NULL,
-  `id_usuario_calificado` int NOT NULL,
-  `rol_calificado` enum('Vendedor','Comprador') NOT NULL,
-  `puntuacion` tinyint NOT NULL,
-  `comentario` text,
-  `fecha_calificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_venta` (`id_venta`),
-  KEY `id_usuario_calificador` (`id_usuario_calificador`),
-  KEY `id_usuario_calificado` (`id_usuario_calificado`),
-  CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`id_usuario_calificador`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `calificaciones_ibfk_3` FOREIGN KEY (`id_usuario_calificado`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `calificaciones`
 --
 
@@ -49,23 +23,6 @@ LOCK TABLES `calificaciones` WRITE;
 /*!40000 ALTER TABLE `calificaciones` DISABLE KEYS */;
 /*!40000 ALTER TABLE `calificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `categoria`
---
-
-DROP TABLE IF EXISTS `categoria`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categoria` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `categoria_padre` int DEFAULT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `categoria_padre` (`categoria_padre`),
-  CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`categoria_padre`) REFERENCES `categoria` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `categoria`
@@ -77,31 +34,6 @@ LOCK TABLES `categoria` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `chats`
---
-
-DROP TABLE IF EXISTS `chats`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `chats` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_publicacion` int NOT NULL,
-  `id_usuario_comprador` int NOT NULL,
-  `id_usuario_vendedor` int NOT NULL,
-  `estado` enum('Activo','Archivado','Vendido') DEFAULT 'Activo',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_ultima_actividad` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `chat_unico` (`id_publicacion`,`id_usuario_comprador`),
-  KEY `id_usuario_comprador` (`id_usuario_comprador`),
-  KEY `id_usuario_vendedor` (`id_usuario_vendedor`),
-  CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `chats_ibfk_2` FOREIGN KEY (`id_usuario_comprador`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `chats_ibfk_3` FOREIGN KEY (`id_usuario_vendedor`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `chats`
 --
 
@@ -109,22 +41,6 @@ LOCK TABLES `chats` WRITE;
 /*!40000 ALTER TABLE `chats` DISABLE KEYS */;
 /*!40000 ALTER TABLE `chats` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `colegio`
---
-
-DROP TABLE IF EXISTS `colegio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `colegio` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  `direccion` varchar(255) DEFAULT NULL,
-  `logo` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `colegio`
@@ -136,23 +52,6 @@ LOCK TABLES `colegio` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `curso`
---
-
-DROP TABLE IF EXISTS `curso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `curso` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
-  `id_colegio` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_colegio` (`id_colegio`),
-  CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`id_colegio`) REFERENCES `colegio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `curso`
 --
 
@@ -160,23 +59,6 @@ LOCK TABLES `curso` WRITE;
 /*!40000 ALTER TABLE `curso` DISABLE KEYS */;
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `favoritos`
---
-
-DROP TABLE IF EXISTS `favoritos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `favoritos` (
-  `id_usuario` int NOT NULL,
-  `id_publicacion` int NOT NULL,
-  PRIMARY KEY (`id_usuario`,`id_publicacion`),
-  KEY `id_publicacion` (`id_publicacion`),
-  CONSTRAINT `favoritos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `favoritos_ibfk_2` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `favoritos`
@@ -188,23 +70,6 @@ LOCK TABLES `favoritos` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `imagen_publicacion`
---
-
-DROP TABLE IF EXISTS `imagen_publicacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `imagen_publicacion` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_publicacion` int NOT NULL,
-  `url_imagen` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_publicacion` (`id_publicacion`),
-  CONSTRAINT `imagen_publicacion_ibfk_1` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `imagen_publicacion`
 --
 
@@ -212,28 +77,6 @@ LOCK TABLES `imagen_publicacion` WRITE;
 /*!40000 ALTER TABLE `imagen_publicacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `imagen_publicacion` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `mensajes`
---
-
-DROP TABLE IF EXISTS `mensajes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mensajes` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_chat` int NOT NULL,
-  `id_usuario_envia` int NOT NULL,
-  `contenido` text NOT NULL,
-  `fecha_envio` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `leido` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `id_chat` (`id_chat`),
-  KEY `id_usuario_envia` (`id_usuario_envia`),
-  CONSTRAINT `mensajes_ibfk_1` FOREIGN KEY (`id_chat`) REFERENCES `chats` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `mensajes_ibfk_2` FOREIGN KEY (`id_usuario_envia`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `mensajes`
@@ -245,25 +88,14 @@ LOCK TABLES `mensajes` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `notificaciones`
+-- Dumping data for table `niveles`
 --
 
-DROP TABLE IF EXISTS `notificaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notificaciones` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_usuario_destino` int NOT NULL,
-  `tipo` enum('MENSAJE_SIN_LEER','NIVEL_SUBIDO','NUEVA_CALIFICACION','PUBLICACION_VENCIDA') NOT NULL,
-  `contenido` varchar(255) NOT NULL,
-  `id_referencia` int DEFAULT NULL,
-  `leida` tinyint(1) DEFAULT '0',
-  `fecha_creacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `id_usuario_destino` (`id_usuario_destino`),
-  CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`id_usuario_destino`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `niveles` WRITE;
+/*!40000 ALTER TABLE `niveles` DISABLE KEYS */;
+INSERT INTO `niveles` VALUES (1,0,'Novato'),(2,50,'Principiante'),(3,150,'Habitual'),(4,300,'Activo'),(5,500,'Entusiasta'),(6,800,'Veterano'),(7,1200,'Experto'),(8,1700,'Maestro'),(9,2500,'Coleccionista'),(10,5000,'Leyenda');
+/*!40000 ALTER TABLE `niveles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `notificaciones`
@@ -275,33 +107,6 @@ LOCK TABLES `notificaciones` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `publicacion`
---
-
-DROP TABLE IF EXISTS `publicacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `publicacion` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_usuario_vendedor` int NOT NULL,
-  `titulo` varchar(150) NOT NULL,
-  `descripcion` text,
-  `precio` decimal(10,2) DEFAULT NULL,
-  `condicion` enum('Nuevo','Excelente','Muy bueno','Bueno','Aceptable','Malo') DEFAULT NULL,
-  `fecha_publicacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_ultima_actualizacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `estado` enum('Activo','Pausado','Vendido','Inactivo','Necesita Revision') DEFAULT 'Activo',
-  `descuento` decimal(5,2) DEFAULT '0.00',
-  `id_categoria` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_usuario_vendedor` (`id_usuario_vendedor`),
-  KEY `id_categoria` (`id_categoria`),
-  CONSTRAINT `publicacion_ibfk_1` FOREIGN KEY (`id_usuario_vendedor`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `publicacion_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `publicacion`
 --
 
@@ -309,23 +114,6 @@ LOCK TABLES `publicacion` WRITE;
 /*!40000 ALTER TABLE `publicacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `publicacion` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `publicacion_colegio`
---
-
-DROP TABLE IF EXISTS `publicacion_colegio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `publicacion_colegio` (
-  `id_publicacion` int NOT NULL,
-  `id_colegio` int NOT NULL,
-  PRIMARY KEY (`id_publicacion`,`id_colegio`),
-  KEY `id_colegio` (`id_colegio`),
-  CONSTRAINT `publicacion_colegio_ibfk_1` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `publicacion_colegio_ibfk_2` FOREIGN KEY (`id_colegio`) REFERENCES `colegio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `publicacion_colegio`
@@ -337,23 +125,6 @@ LOCK TABLES `publicacion_colegio` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `publicacion_curso`
---
-
-DROP TABLE IF EXISTS `publicacion_curso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `publicacion_curso` (
-  `id_publicacion` int NOT NULL,
-  `id_curso` int NOT NULL,
-  PRIMARY KEY (`id_publicacion`,`id_curso`),
-  KEY `id_curso` (`id_curso`),
-  CONSTRAINT `publicacion_curso_ibfk_1` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `publicacion_curso_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `publicacion_curso`
 --
 
@@ -363,34 +134,23 @@ LOCK TABLES `publicacion_curso` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `usuarios`
+-- Dumping data for table `reportes`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuarios` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `apellido` varchar(50) NOT NULL,
-  `mail` varchar(100) NOT NULL,
-  `contraseña` varchar(255) NOT NULL,
-  `dni` varchar(15) DEFAULT NULL,
-  `fecha_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `genero` enum('Masculino','Femenino','Otro') DEFAULT 'Otro',
-  `fecha_nacimiento` date DEFAULT NULL,
-  `telefono` varchar(20) DEFAULT NULL,
-  `nivel` int DEFAULT '1',
-  `es_verificado` tinyint(1) DEFAULT '0',
-  `calificacion_vendedor_promedio` decimal(3,2) DEFAULT NULL,
-  `total_calificaciones_vendedor` int DEFAULT '0',
-  `calificacion_comprador_promedio` decimal(3,2) DEFAULT NULL,
-  `total_calificaciones_comprador` int DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mail` (`mail`),
-  UNIQUE KEY `dni` (`dni`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `reportes` WRITE;
+/*!40000 ALTER TABLE `reportes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reportes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `reportes_motivos`
+--
+
+LOCK TABLES `reportes_motivos` WRITE;
+/*!40000 ALTER TABLE `reportes_motivos` DISABLE KEYS */;
+INSERT INTO `reportes_motivos` VALUES (1,'PUBLICACION_ENGAÑOSA','La publicación es engañosa o el producto no coincide','PUBLICACION',1),(2,'PRODUCTO_PROHIBIDO','El producto está prohibido por las normas del sitio','PUBLICACION',1),(3,'PRECIO_IRREAL','El precio de la publicación es claramente irreal o engañoso','PUBLICACION',1),(4,'CHAT_ACOSO','He recibido mensajes ofensivos o acoso en el chat','CHAT',1),(5,'CHAT_SPAM','He recibido spam o publicidad no deseada','CHAT',1),(6,'INTENTO_ESTAFA','El usuario intentó estafarme','GENERAL',1),(7,'NO_SE_PRESENTO','El usuario no se presentó en el punto de encuentro acordado','VENTA',1),(8,'PERFIL_FALSO','Creo que el perfil del usuario es falso','USUARIO',1),(9,'COMENTARIO_OFENSIVO','La calificación contiene un comentario ofensivo','CALIFICACION',1),(10,'OTRO','Otro motivo no listado','GENERAL',1);
+/*!40000 ALTER TABLE `reportes_motivos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `usuarios`
@@ -400,34 +160,6 @@ LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `ventas`
---
-
-DROP TABLE IF EXISTS `ventas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ventas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_publicacion` int NOT NULL,
-  `id_chat_origen` int DEFAULT NULL,
-  `id_comprador` int NOT NULL,
-  `id_vendedor` int NOT NULL,
-  `precio_final` decimal(10,2) NOT NULL,
-  `punto_entrega` varchar(255) DEFAULT NULL,
-  `fecha_venta` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `id_publicacion` (`id_publicacion`),
-  KEY `id_chat_origen` (`id_chat_origen`),
-  KEY `id_comprador` (`id_comprador`),
-  KEY `id_vendedor` (`id_vendedor`),
-  CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`id_chat_origen`) REFERENCES `chats` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `ventas_ibfk_3` FOREIGN KEY (`id_comprador`) REFERENCES `usuarios` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `ventas_ibfk_4` FOREIGN KEY (`id_vendedor`) REFERENCES `usuarios` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ventas`
@@ -447,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-15  9:51:53
+-- Dump completed on 2025-10-22  9:08:03
