@@ -13,10 +13,12 @@ import ar.com.colevueltas.site.repository.CategoriaRepository;
 import ar.com.colevueltas.site.repository.ImagenPublicacionRepository;
 import ar.com.colevueltas.site.repository.PublicacionRepository;
 import ar.com.colevueltas.site.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.math.BigDecimal;
@@ -42,6 +44,13 @@ public class PublicacionService {
         this.cloudinary = cloudinary;
         this.usuarioRepository = usuarioRepository;
         this.categoriaRepository = categoriaRepository;
+    }
+
+    public void delete(int id) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Publicación no encontrada");
+        }
+        repository.deleteById(id);
     }
 
     public List<PublicacionDTO> getPublicacionesByUsuario(int idVendedor) {

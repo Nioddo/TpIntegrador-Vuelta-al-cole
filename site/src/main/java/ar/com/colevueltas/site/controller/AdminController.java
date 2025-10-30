@@ -1,10 +1,34 @@
 package ar.com.colevueltas.site.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ar.com.colevueltas.site.dto.CategoriaCrearDTO;
+import ar.com.colevueltas.site.service.CategoriaService;
+import ar.com.colevueltas.site.service.PublicacionService;
+import ar.com.colevueltas.site.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
 
 public class AdminController {
+
+    private final PublicacionService publicacionService;
+    private final CategoriaService categoriaService;
+
+    @Autowired
+    public AdminController(PublicacionService publicacionService, CategoriaService categoriaService) {
+        this.publicacionService = publicacionService;
+        this.categoriaService = categoriaService;
+    }
+
+    @DeleteMapping("/publicaciones/{id}")
+    public void deletePublicacion(@PathVariable int id) {
+        publicacionService.delete(id);
+    }
+
+    @PostMapping("/categoria")
+    public void crearCategoria(@PathVariable int id, @RequestBody CategoriaCrearDTO dto) {
+        categoriaService.crearCategoria(dto);
+    }
+
 }
