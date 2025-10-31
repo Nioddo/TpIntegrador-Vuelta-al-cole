@@ -27,7 +27,7 @@ public class AdminController {
     }
 
     @PostMapping("/categoria")
-    public void crearCategoria(@PathVariable int id, @RequestBody CategoriaCrearDTO dto) {
+    public void crearCategoria(@RequestBody CategoriaCrearDTO dto) {
         categoriaService.crearCategoria(dto);
     }
 

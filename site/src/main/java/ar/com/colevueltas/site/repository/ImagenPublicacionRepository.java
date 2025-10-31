@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface ImagenPublicacionRepository extends JpaRepository<ImagenPublicacion, Integer> {
     List<ImagenPublicacion> findByPublicacion(Publicacion publicacion);
-
-
+    List<String> findUrlImagenByPublicacionId(Integer idPublicacion);
 }
