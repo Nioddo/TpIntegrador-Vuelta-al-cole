@@ -1,6 +1,7 @@
 package ar.com.colevueltas.site.controller;
 
 import ar.com.colevueltas.site.dto.CategoriaCrearDTO;
+import ar.com.colevueltas.site.model.BitacoraAdmin;
 import ar.com.colevueltas.site.service.CategoriaService;
 import ar.com.colevueltas.site.service.PublicacionService;
 import ar.com.colevueltas.site.service.UsuarioService;
