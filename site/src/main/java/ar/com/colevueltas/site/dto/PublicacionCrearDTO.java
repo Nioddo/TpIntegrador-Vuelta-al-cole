@@ -30,16 +30,25 @@ public class PublicacionCrearDTO {
     @NotNull(message = "Debe agregar al menos una imagen")
     private List<MultipartFile> imagenes;
 
+    @NotNull(message = "Debe seleccionar al menos un curso")
+    private List<Integer> idsCursos;
+
+    @NotNull(message = "Debe seleccionar al menos un colegio")
+    private List<Integer> idsColegios;
+
+
     public PublicacionCrearDTO() {
     }
 
-    public PublicacionCrearDTO(String titulo, String descripcion, BigDecimal precio, Condicion condicion, Integer idCategoria, List<MultipartFile> imagenes) {
+    public PublicacionCrearDTO(String titulo, String descripcion, BigDecimal precio, Condicion condicion, Integer idCategoria, List<MultipartFile> imagenes, List<Integer> idsCursos, List<Integer> idsColegios) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.condicion = condicion;
         this.idCategoria = idCategoria;
         this.imagenes = imagenes;
+        this.idsCursos = idsCursos;
+        this.idsColegios = idsColegios;
     }
 
     public String getTitulo() {
@@ -88,5 +97,21 @@ public class PublicacionCrearDTO {
 
     public void setImagenes(List<MultipartFile> imagenes) {
         this.imagenes = imagenes;
+    }
+
+    public List<Integer> getIdsCursos() {
+        return idsCursos;
+    }
+
+    public void setIdsCursos(List<Integer> idsCursos) {
+        this.idsCursos = idsCursos;
+    }
+
+    public List<Integer> getIdsColegios() {
+        return idsColegios;
+    }
+
+    public void setIdsColegios(List<Integer> idsColegios) {
+        this.idsColegios = idsColegios;
     }
 }

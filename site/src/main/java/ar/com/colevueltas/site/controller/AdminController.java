@@ -24,7 +24,8 @@ public class AdminController {
 
     @DeleteMapping("/publicaciones/{id}")
     public void deletePublicacion(@PathVariable int id) {
-        publicacionService.delete(id);
+        /*publicacionService.delete(id);*/
+        publicacionService.softDelete(id);
     }
 
     @PostMapping("/categoria")

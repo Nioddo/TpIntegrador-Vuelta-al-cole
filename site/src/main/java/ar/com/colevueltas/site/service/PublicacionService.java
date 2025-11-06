@@ -5,14 +5,9 @@ import ar.com.colevueltas.site.dto.CompraDTO;
 import ar.com.colevueltas.site.dto.PublicacionCrearDTO;
 import ar.com.colevueltas.site.dto.PublicacionDTO;
 import ar.com.colevueltas.site.globals.BadRequestException;
-import ar.com.colevueltas.site.model.Compra;
-import ar.com.colevueltas.site.model.EstadoPublicacion;
-import ar.com.colevueltas.site.model.ImagenPublicacion;
-import ar.com.colevueltas.site.model.Publicacion;
-import ar.com.colevueltas.site.repository.CategoriaRepository;
-import ar.com.colevueltas.site.repository.ImagenPublicacionRepository;
-import ar.com.colevueltas.site.repository.PublicacionRepository;
-import ar.com.colevueltas.site.repository.UsuarioRepository;
+import ar.com.colevueltas.site.model.*;
+import ar.com.colevueltas.site.repository.*;
+import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -33,17 +29,21 @@ public class PublicacionService {
     private final UsuarioRepository usuarioRepository;
     private final CategoriaRepository categoriaRepository;
     private final Cloudinary cloudinary;
+    private final PublicacionColegioRepository publicacionColegioRepository;
+    private final PublicacionCursoRepository publicacionCursoRepository;
+    private final ColegioRepository colegioRepository;
+    private final CursoRepository cursoRepository;
 
-    public PublicacionService(PublicacionRepository repository,
-                              ImagenPublicacionRepository imagenRepository,
-                              Cloudinary cloudinary,
-                              UsuarioRepository usuarioRepository,
-                              CategoriaRepository categoriaRepository) {
+    public PublicacionService(PublicacionRepository repository, ImagenPublicacionRepository imagenRepository, UsuarioRepository usuarioRepository, CategoriaRepository categoriaRepository, Cloudinary cloudinary, PublicacionColegioRepository publicacionColegioRepository, PublicacionCursoRepository publicacionCursoRepository, ColegioRepository colegioRepository, CursoRepository cursoRepository) {
         this.repository = repository;
         this.imagenRepository = imagenRepository;
-        this.cloudinary = cloudinary;
         this.usuarioRepository = usuarioRepository;
         this.categoriaRepository = categoriaRepository;
+        this.cloudinary = cloudinary;
+        this.publicacionColegioRepository = publicacionColegioRepository;
+        this.publicacionCursoRepository = publicacionCursoRepository;
+        this.colegioRepository = colegioRepository;
+        this.cursoRepository = cursoRepository;
     }
 
     public void delete(int id) {
@@ -51,6 +51,14 @@ public class PublicacionService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Publicación no encontrada");
         }
         repository.deleteById(id);
+    }
+
+    public void softDelete(int id) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Publicación no encontrada");
+        }
+        repository.actualizarEstadoPorId(id, EstadoPublicacion.Inactivo);
+        repository.actualizarFechaEliminacionPorId(id, LocalDateTime.now());
     }
 
     public List<PublicacionDTO> getPublicacionesByUsuario(int idVendedor) {
@@ -118,6 +126,23 @@ public class PublicacionService {
                 }
             }
         }
+
+        if (dto.getIdsColegios() != null && !dto.getIdsColegios().isEmpty()) {
+            List<Colegio> colegios = colegioRepository.findAllById(dto.getIdsColegios());
+            for (Colegio colegio : colegios) {
+                PublicacionColegio pc = new PublicacionColegio(publicacion, colegio);
+                publicacionColegioRepository.save(pc);
+            }
+        }
+
+        if (dto.getIdsCursos() != null && !dto.getIdsCursos().isEmpty()) {
+            List<Curso> cursos = cursoRepository.findAllById(dto.getIdsCursos());
+            for (Curso curso : cursos) {
+                PublicacionCurso pc = new PublicacionCurso(publicacion, curso);
+                publicacionCursoRepository.save(pc);
+            }
+        }
+
         return publicacion;
     }
 
