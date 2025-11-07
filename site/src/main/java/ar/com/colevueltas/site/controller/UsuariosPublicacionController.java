@@ -25,16 +25,13 @@ public class UsuariosPublicacionController {
         this.service = service;
     }
 
-    @Autowired
-    private CompraRepository repository;
-
     @PostMapping
-    public Publicacion createCompra(@PathVariable int id, @ModelAttribute PublicacionCrearDTO dto) throws Exception {
+    public Publicacion createPublicacion(@PathVariable int id, @ModelAttribute PublicacionCrearDTO dto) throws Exception {
         return service.create(id, dto);
     }
 
     @GetMapping
-    public List<PublicacionDTO> verCompras(@PathVariable int id){
+    public List<PublicacionDTO> verPublicaciones(@PathVariable int id){
         return service.getPublicacionesByUsuario(id);
     }
 }

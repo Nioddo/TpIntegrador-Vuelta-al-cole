@@ -1,9 +1,7 @@
 package ar.com.colevueltas.site.service;
 
 
-import ar.com.colevueltas.site.dto.CompraDTO;
-import ar.com.colevueltas.site.dto.PublicacionCrearDTO;
-import ar.com.colevueltas.site.dto.PublicacionDTO;
+import ar.com.colevueltas.site.dto.*;
 import ar.com.colevueltas.site.globals.BadRequestException;
 import ar.com.colevueltas.site.model.*;
 import ar.com.colevueltas.site.repository.*;
@@ -144,6 +142,25 @@ public class PublicacionService {
         }
 
         return publicacion;
+    }
+
+    public List<PublicacionBuscarDTO> filtrarPublicaciones(FiltrosDTO dto){
+        List<Publicacion> publicaciones;
+        List<Publicacion> publicacionesSelec;
+        if (dto.getCategoria() != null) {
+            publicaciones = repository.findByIdCategoria(dto.getCategoria());
+        } else {
+            publicaciones = repository.findAll();
+        }
+
+        for(Publicacion pub : publicaciones){
+            if(pub.getTitulo().contains(dto.getBusqueda())){
+                if(dto.getCondicion().contains(pub.getCondicion())){
+
+                }
+            }
+        }
+        return null;
     }
 
 }
