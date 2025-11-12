@@ -3,6 +3,7 @@ package ar.com.colevueltas.site.controller;
 import ar.com.colevueltas.site.dto.NivelDTO;
 import ar.com.colevueltas.site.dto.ReputacionVendedorDTO;
 import ar.com.colevueltas.site.dto.UsuarioCrearDTO;
+import ar.com.colevueltas.site.dto.UsuarioPerfilDTO;
 import ar.com.colevueltas.site.model.Usuario;
 import ar.com.colevueltas.site.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -27,6 +28,11 @@ public class UsuariosController {
     public Usuario createUsuario(@Valid @RequestBody UsuarioCrearDTO dto){
         System.out.println(dto);
         return usuarioService.create(dto);
+    }
+
+    @GetMapping("/{id}")
+    public UsuarioPerfilDTO perfilUsuario(@PathVariable("id") int id){
+        return usuarioService.infoPerfilUsuario(id);
     }
 
     @GetMapping("/{id}/nivel")

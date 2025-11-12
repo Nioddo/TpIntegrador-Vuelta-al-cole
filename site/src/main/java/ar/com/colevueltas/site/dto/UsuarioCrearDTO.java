@@ -50,10 +50,23 @@ public class UsuarioCrearDTO {
     @JsonProperty("telefono")
     private String telefono;
 
+    @NotBlank(message = "La contraseña es obligatoria")
+    @JsonProperty("username")
+    private String username;
+
+    @JsonProperty("biografia")
+    private String biografia;
+
+    @JsonProperty("direccion")
+    private String direccion;
+
+    @JsonProperty("envio")
+    private String envio;
+
     public UsuarioCrearDTO() {
     }
 
-    public UsuarioCrearDTO(String nombre, String apellido, String mail, String contrasenia, int dni, Genero genero, LocalDate fecha_nacimiento, String telefono) {
+    public UsuarioCrearDTO(String nombre, String apellido, String mail, String contrasenia, int dni, Genero genero, LocalDate fecha_nacimiento, String telefono, String username, String biografia, String direccion, String envio) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
@@ -62,6 +75,10 @@ public class UsuarioCrearDTO {
         this.genero = genero;
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
+        this.username = username;
+        this.biografia = biografia;
+        this.direccion = direccion;
+        this.envio = envio;
     }
 
     public String getNombre() {
@@ -126,5 +143,37 @@ public class UsuarioCrearDTO {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
+    }
+
+    public String getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(String envio) {
+        this.envio = envio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

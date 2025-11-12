@@ -7,15 +7,17 @@ public class PublicacionBuscarDTO {
     private Integer id;
     private String titulo;
     private BigDecimal precio;
+    private BigDecimal descuento;
     private List<String> imagenes;
 
     public PublicacionBuscarDTO() {
     }
 
-    public PublicacionBuscarDTO(Integer id, String titulo, BigDecimal precio, List<String> imagenes) {
+    public PublicacionBuscarDTO(Integer id, String titulo, BigDecimal precio, BigDecimal descuento, List<String> imagenes) {
         this.id = id;
         this.titulo = titulo;
         this.precio = precio;
+        this.descuento = descuento;
         this.imagenes = imagenes;
     }
 
@@ -49,5 +51,13 @@ public class PublicacionBuscarDTO {
 
     public void setImagenes(List<String> imagenes) {
         this.imagenes = imagenes;
+    }
+
+    public BigDecimal getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(BigDecimal descuento) {
+        this.descuento = descuento;
     }
 }

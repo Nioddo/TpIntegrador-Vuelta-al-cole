@@ -39,10 +39,16 @@ public class Usuario {
     private int total_calificaciones_comprador;
     private LocalDateTime fecha_eliminacion;
 
+    private String username;
+    @Column(length = 2550)
+    private String biografia;
+    private String envio;
+    private String direccion;
+
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String apellido, String mail, String contrasenia, int dni, LocalDateTime fecha_registro, Genero genero, LocalDate fecha_nacimiento, String telefono, int xp, int nivel, boolean es_verificado, Double calificacion_vendedor_promedio, int total_calificaciones_vendedor, Double calificacion_comprador_promedio, int total_calificaciones_comprador, LocalDateTime fecha_eliminacion) {
+    public Usuario(int id, String nombre, String apellido, String mail, String contrasenia, int dni, LocalDateTime fecha_registro, Genero genero, LocalDate fecha_nacimiento, String telefono, int xp, int nivel, boolean es_verificado, Double calificacion_vendedor_promedio, int total_calificaciones_vendedor, Double calificacion_comprador_promedio, int total_calificaciones_comprador, LocalDateTime fecha_eliminacion, String username, String biografia, String envio) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -53,12 +59,17 @@ public class Usuario {
         this.genero = genero;
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
+        this.xp = xp;
         this.nivel = nivel;
         this.es_verificado = es_verificado;
         this.calificacion_vendedor_promedio = calificacion_vendedor_promedio;
         this.total_calificaciones_vendedor = total_calificaciones_vendedor;
         this.calificacion_comprador_promedio = calificacion_comprador_promedio;
         this.total_calificaciones_comprador = total_calificaciones_comprador;
+        this.fecha_eliminacion = fecha_eliminacion;
+        this.username = username;
+        this.biografia = biografia;
+        this.envio = envio;
     }
 
     public int getId() {
@@ -203,5 +214,37 @@ public class Usuario {
 
     public void setFecha_eliminacion(LocalDateTime fecha_eliminacion) {
         this.fecha_eliminacion = fecha_eliminacion;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
+    }
+
+    public String getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(String envio) {
+        this.envio = envio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }
