@@ -202,7 +202,7 @@ public class PublicacionService {
         dto.setDescuento_fecha_fin(pub.getDescuentoFechaFin());
         dto.setId_categoria(pub.getIdCategoria());
         dto.setNomCategoria(categoriaRepository.getReferenceById(pub.getIdCategoria()).getNombre());
-
+        dto.setImagenes(imagenRepository.findUrlImagenByPublicacionId(id));
         List<PublicacionPreguntaDTO> preguntas = new ArrayList<>();
 
         for(PublicacionPregunta p : publicacionPreguntaRepository.findByPublicacionId(id)){

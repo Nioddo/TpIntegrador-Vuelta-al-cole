@@ -23,13 +23,14 @@ public class PublicacionVerDTO {
     private int id_categoria;
     private String nomCategoria;
     private List<PublicacionPreguntaDTO> preguntas;
+    private List<String> imagenes;
 
     public PublicacionVerDTO() {}
 
     public PublicacionVerDTO(int id, int id_usuario_vendedor, String titulo, String descripcion, BigDecimal precio,
                              Condicion condicion, LocalDateTime fecha_publicacion, EstadoPublicacion estado,
                              BigDecimal descuento, LocalDateTime descuento_fecha_inicio, LocalDateTime descuento_fecha_fin,
-                             int id_categoria) {
+                             int id_categoria, List<String> imagenes) {
         this.id = id;
         this.id_usuario_vendedor = id_usuario_vendedor;
         this.titulo = titulo;
@@ -42,6 +43,7 @@ public class PublicacionVerDTO {
         this.descuento_fecha_inicio = descuento_fecha_inicio;
         this.descuento_fecha_fin = descuento_fecha_fin;
         this.id_categoria = id_categoria;
+        this.imagenes = imagenes;
     }
 
     public int getId() {
@@ -154,5 +156,13 @@ public class PublicacionVerDTO {
 
     public void setPreguntas(List<PublicacionPreguntaDTO> preguntas) {
         this.preguntas = preguntas;
+    }
+
+    public List<String> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<String> imagenes) {
+        this.imagenes = imagenes;
     }
 }
