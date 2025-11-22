@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColeVueltas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="css/indexstyles.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header class="py-2 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center  mx-0">
+            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                <span class="fs-4">ColeVueltas</span>
+            </a>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0">
+                <div class="text-end">
+                    <button type="button" class="btn btn-light text-dark me-2">Login</button>
+                    <button type="button" class="btn btn-primary">Sign-up</button>
+                </div>
+            </form>
+        </div>
+    </header>
+    <nav class="py-2 border-bottom">
+        <div class="container d-flex flex-wrap mx-0">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="#" class="nav-link link-dark px-2 active" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle link-dark px-2" href="#"
+                        id="uniformesDropdown" data-bs-toggle="dropdown" aria-expanded="false"> Uniformes </a>
+                    <ul class="dropdown-menu" id="menuUniformes" aria-labelledby="uniformesDropdown">
+                        <!-- <li class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle" href="#">Colegio A</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle"
+                                        href="#">Primaria</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">1er grado</a></li>
+                                        <li><a class="dropdown-item" href="#">2do grado</a></li>
+                                        <li class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle"
+                                                href="#">3er grado</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Ver uniforme</a></li>
+                                                <li><a class="dropdown-item" href="#">Comprar</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Secundaria</a></li>
+                                <li><a class="dropdown-item" href="#">Educación Física</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Ver todos</a></li> -->
+                    </ul>
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle link-dark px-2" href="#"
+                        id="objetosDropdown" data-bs-toggle="dropdown" aria-expanded="false"> Objetos </a>
+                    <ul class="dropdown-menu" id="menuObjetos" aria-labelledby="objetosDropdown">
+                        <!-- <li class="dropdown-submenu"> 
+                            <a class="dropdown-item dropdown-toggle" href="#">Colegio A</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle"
+                                        href="#">Primaria</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">1er grado</a></li>
+                                        <li><a class="dropdown-item" href="#">2do grado</a></li>
+                                        <li class="dropdown-submenu"> <a class="dropdown-item dropdown-toggle"
+                                                href="#">3er grado</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Ver uniforme</a></li>
+                                                <li><a class="dropdown-item" href="#">Comprar</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Secundaria</a></li>
+                                <li><a class="dropdown-item" href="#">Educación Física</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Ver todos</a></li> -->
+                    </ul>
+                </li>
+
+
+                <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link link-dark px-2">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="text-center mt-4">
+        <h3 class="fw-bold">VueltaAlCole</h3>
+        <h6 class="text-muted">Todo lo que necesitas, en un lugar</h6>
+    </div>
+
+    <div class="container my-4">
+        <div class="input-group shadow-sm rounded-pill overflow-hidden">
+            <span class="input-group-text bg-white border-0">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control border-0" placeholder="Buscar...">
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="p-5 rounded-4 bg-light">
+            <div class="row text-center g-4">
+
+                <div class="col-12 col-md-6">
+                    <div>
+                        <i class="fa-solid fa-book fa-3x iconoHome"></i>
+                        <h4 class="fw-bold mt-3">OBJETOS</h4>
+                        <button class="btn btn-dark mt-2 px-4">Explorar</button>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div>
+                        <i class="fa-solid fa-shirt fa-3x iconoHome"></i>
+                        <h4 class="fw-bold mt-3">UNIFORMES</h4>
+                        <button class="btn btn-dark mt-2 px-4">Explorar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center my-5">
+        <h4 class="fw-bold">Cómo funciona</h4>
+        <p class="text-muted mx-auto" id="TituloCF">
+            Explora categorías, busca artículos y conéctate con vendedores para comprar o vender
+            esenciales escolares de forma fácil y segura.
+        </p>
+    </div>
+
+    <div class="container text-center mb-4">
+        <h5 class="fw-bold">Algunos de nuestros colegios</h5>
+
+        <div class="row justify-content-center g-4 mt-3">
+
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="p-4 bg-light rounded-4">
+                    <div class="rounded-circle bg-white mx-auto mb-3 icono-cole"></div>
+
+                    <small class="text-muted d-block">Jardín–Primaria–Secundaria</small>
+                    <h6 class="fw-bold mt-1">Instituto Tomas Devoto</h6>
+                </div>
+            </div>
+
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="p-4 bg-light rounded-4">
+                    <div class="rounded-circle bg-white mx-auto mb-3 icono-cole"></div>
+
+                    <small class="text-muted d-block">Secundaria</small>
+                    <h6 class="fw-bold mt-1">Instituto Politécnico Modelo</h6>
+                </div>
+            </div>
+
+            <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+                <div class="p-4 bg-light rounded-4">
+                    <div class="rounded-circle bg-white mx-auto mb-3 icono-cole"></div>
+
+                    <small class="text-muted d-block">Coming Soon</small>
+                    <h6 class="fw-bold mt-1">Colegio3</h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container text-center my-5">
+        <h3 class="fw-bold">Publicaciones destacadas</h3>
+    </div>
+
+    <div class="row" id="publicaciones-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            document.querySelectorAll('.dropdown-item.dropdown-toggle').forEach(el => {
+                el.addEventListener('click', e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const submenu = el.nextElementSibling;
+                    if (!submenu) return;
+                    const parentMenu = el.closest('.dropdown-menu');
+                    parentMenu.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
+                        if (openMenu !== submenu) openMenu.classList.remove('show');
+                    });
+                    submenu.classList.toggle('show');
+                });
+            });
+            document.querySelectorAll('.dropdown').forEach(dd => {
+                dd.addEventListener('hide.bs.dropdown', () => {
+                    dd.querySelectorAll('.dropdown-menu.show').forEach(sm => sm.classList
+                        .remove('show'));
+                });
+            });
+
+            fetch('http://localhost:8080/api/categorias')
+                .then(res => res.json())
+                .then(data => {
+                    const objetos = data.find(c => c.id === 1 || c.nombre.toLowerCase() === 'objetos');
+                    const uniformes = data.find(c => c.id === 2 || c.nombre.toLowerCase() === 'uniformes');
+
+                    if (objetos) fillDropdownMenu(objetos, '#menuObjetos');
+                    if (uniformes) fillDropdownMenu(uniformes, '#menuUniformes');
+                })
+                .then(() => rebindDropdownListeners())
+                .catch(err => console.error('Error al cargar categorías:', err));
+
+            function fillDropdownMenu(categoria, selector) {
+                const contenedor = document.querySelector(selector);
+                contenedor.innerHTML = '';
+
+                categoria.hijos.forEach(sub => {
+                    const li = crearElementoCategoria(sub);
+                    contenedor.appendChild(li);
+                });
+
+                const verTodos = document.createElement('li');
+                verTodos.innerHTML = `<a class="dropdown-item" href="#">Ver todos</a>`;
+                contenedor.appendChild(verTodos);
+            }
+
+            function crearElementoCategoria(cat) {
+                const li = document.createElement('li');
+
+                if (cat.hijos && cat.hijos.length > 0) {
+                    li.classList.add('dropdown-submenu');
+                    li.innerHTML = `
+                <a class="dropdown-item dropdown-toggle" href="#" data-id="${cat.id}">${cat.nombre}</a>
+                <ul class="dropdown-menu"></ul>
+            `;
+
+                    const submenu = li.querySelector('.dropdown-menu');
+                    cat.hijos.forEach(hijo => submenu.appendChild(crearElementoCategoria(hijo)));
+                } else {
+                    li.innerHTML = `
+                <a class="dropdown-item" href="/categoria/${cat.id}" data-id="${cat.id}">${cat.nombre}</a>
+            `;
+                }
+
+                return li;
+            }
+
+            function rebindDropdownListeners() {
+                document.querySelectorAll('.dropdown-item.dropdown-toggle').forEach(el => {
+                    el.onclick = (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const submenu = el.nextElementSibling;
+                        if (!submenu) return;
+
+                        const parentMenu = el.closest('.dropdown-menu');
+                        parentMenu.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
+                            if (openMenu !== submenu) openMenu.classList.remove('show');
+                        });
+
+                        submenu.classList.toggle('show');
+                    };
+                });
+            }
+
+            async function cargarPublicaciones() {
+                const res = await fetch(`http://localhost:8080/api/publicaciones/destacados`);
+                const data = await res.json();
+
+                console.log(data);
+
+                // Publicaciones
+                const publicacionesContainer = document.getElementById("publicaciones-container");
+                data.forEach(pub => {
+                    publicacionesContainer.innerHTML += `
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-grid">
+                            <div class="product-image">
+                                <a href="#" class="image">
+                                    <img class="pic-1" src="${pub.imagenes[0]}">
+                                    <img class="pic-2" src="${pub.imagenes[1]}">
+                                </a>
+                                <a href="#" class="product-like-icon">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="title"><a href="#">${pub.titulo}</a></h3>
+                                <div class="price">$${pub.precio.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                });
+            }
+            cargarPublicaciones();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

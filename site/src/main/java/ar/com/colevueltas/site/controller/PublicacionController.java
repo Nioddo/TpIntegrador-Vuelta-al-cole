@@ -1,26 +1,38 @@
 package ar.com.colevueltas.site.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ar.com.colevueltas.site.dto.FiltrosDTO;
+import ar.com.colevueltas.site.dto.PublicacionBuscarDTO;
+import ar.com.colevueltas.site.dto.PublicacionDTO;
+import ar.com.colevueltas.site.dto.PublicacionVerDTO;
+import ar.com.colevueltas.site.service.PublicacionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/productos")
-
+@RequestMapping("/api/publicaciones")
 public class PublicacionController {
-    @GetMapping("")
-    public String pagPrinc(){
-        return "PAGIUNA PRINCIPAL PRODICTOS";
+
+    private final PublicacionService service;
+
+    @Autowired
+    public PublicacionController(PublicacionService service) {
+        this.service = service;
     }
 
-    @GetMapping("/")
-    public String pagPrinc2(){
-        return "PAGIUNA PRINCIPAL PRODICTOS";
+    @GetMapping()
+    public List<PublicacionBuscarDTO> buscarPublicaciones(@RequestBody FiltrosDTO dto){
+        return null;
+    }
+
+    @GetMapping("/destacados")
+    public List<PublicacionBuscarDTO> publicacionesDestacadas(){
+        return service.getPublicacionesRecientes();
     }
 
     @GetMapping("/{id}")
-    public String prodInd(@PathVariable("id") Long id){
-        return "PAGIUNA indifvidual " + id;
+    public PublicacionVerDTO verPublicacion(@PathVariable("id") int id){
+        return service.getPublicacion(id);
     }
 }
