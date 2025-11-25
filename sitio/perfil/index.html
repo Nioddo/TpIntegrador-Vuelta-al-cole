@@ -221,6 +221,12 @@
                 
                 const publicacionesContainer = document.getElementById("publicaciones-container");
                 data.publicaciones.forEach(pub => {
+                    if (pub.imagenes.length==0){
+                        pub.imagenes[0]="../img-test/placeholder-1-1.png";
+                        pub.imagenes[1]="../img-test/placeholder-1-1.png";
+                    } else if (pub.imagenes.length==1){
+                        pub.imagenes[1]="../img-test/placeholder-1-1.png";
+                    }
                     publicacionesContainer.innerHTML += `
                     <div class="col-md-3 col-sm-6">
                         <div class="product-grid">

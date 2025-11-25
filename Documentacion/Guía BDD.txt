@@ -1,0 +1,307 @@
+DOCUMENTACIÓN TÉCNICA DE BASE DE DATOS - PROYECTO: COLE VUELTAS
+VERSIÓN DEL ESQUEMA: 4.2
+FECHA: 24/11/2025
+
+================================================================================
+PARTE 1: TABLAS DE LA BASE DE DATOS
+================================================================================
+A continuación se detalla cada tabla, su función en el sistema y el análisis de sus atributos.
+
+1. TABLA: usuarios
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Almacena la información de todos los actores del sistema (Compradores, Vendedores y Administradores). Maneja autenticación, perfil, reputación y gamificación.
+ATRIBUTOS:
+  - id (PK): Identificador único.
+  - nombre, apellido: Datos personales.
+  - mail (UNIQUE): Correo para login y notificaciones.
+  - contraseña: Hash de seguridad.
+  - dni (UNIQUE): Documento de identidad.
+  - fecha_registro: Auditoría de ingreso.
+  - genero, fecha_nacimiento, telefono: Datos demográficos.
+  - xp: Puntos de experiencia acumulados (Gamificación).
+  - nivel: Nivel actual del usuario basado en su XP (FK lógica a tabla 'niveles').
+  - es_verificado (TINYINT): Bandera (0/1) que indica si el usuario completó las compras necesarias para ser confiable.
+  - es_admin (TINYINT): Bandera (0/1) crítica. Si es 1, tiene acceso a SPs administrativos.
+  - username: Nombre de usuario público.
+  - calificacion_vendedor_promedio: Caché del promedio de estrellas recibidas como vendedor.
+  - total_calificaciones_vendedor: Contador de cuántas veces fue calificado como vendedor.
+  - calificacion_comprador_promedio: Caché del promedio como comprador.
+  - total_calificaciones_comprador: Contador de calificaciones como comprador.
+  - fecha_eliminacion: Usado para "Soft Delete". Si tiene fecha, el usuario está baneado/borrado.
+  - biografia, envio, direccion: Datos de perfil público.
+
+2. TABLA: publicacion (Tabla Padre)
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Tabla central del inventario. Contiene los datos comunes a cualquier producto. Utiliza una estrategia de herencia para productos específicos (Uniformes).
+ATRIBUTOS:
+  - id (PK): Identificador del producto.
+  - id_usuario_vendedor (FK): Relación con la tabla 'usuarios'.
+  - id_categoria (FK): Relación con 'categoria'. Define qué tipo de producto es.
+  - titulo, descripcion, precio: Datos básicos de venta.
+  - condicion (ENUM): Estado físico del item ('Nuevo', 'Bueno', etc.).
+  - estado (ENUM): Controla el ciclo de vida ('Activo', 'Pausado', 'Vendido', 'Inactivo', 'Necesita Revision').
+  - fecha_publicacion, fecha_ultima_actualizacion: Auditoría temporal.
+  - descuento, descuento_fecha_inicio, descuento_fecha_fin: Sistema de promociones.
+  - fecha_eliminacion: Para "Soft Delete" (papelera de reciclaje).
+
+3. TABLA: publicacion_uniforme (Tabla Hija)
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Extensión de la tabla 'publicacion'. Almacena datos exclusivos para la ropa escolar.
+ATRIBUTOS:
+  - id_publicacion (PK, FK): Clave foránea que apunta a 'publicacion'. Relación 1:1.
+  - id_talle (FK): Relación con tabla 'talles'.
+  - id_colegio (FK): Relación con tabla 'colegio'. Indica a qué institución pertenece el uniforme.
+
+4. TABLA: categoria
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Estructura de árbol (Recursiva) para organizar productos.
+ATRIBUTOS:
+  - id (PK): Identificador.
+  - categoria_padre (FK): Apunta a la misma tabla 'categoria'.
+    * ROL ESPECIAL: Si es NULL, es una Categoría Raíz (ej: "Uniformes"). Si tiene valor, es una Subcategoría (ej: "Pantalones" dentro de "Uniformes").
+  - nombre: Etiqueta de la categoría.
+
+5. TABLA: colegio
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Catálogo de instituciones educativas disponibles para filtrar uniformes.
+ATRIBUTOS:
+  - id (PK), nombre, direccion, logo.
+
+6. TABLA: talles
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Catálogo de medidas estandarizadas (S, M, L, 40, 42).
+ATRIBUTOS:
+  - id (PK), talle, descripcion.
+
+7. TABLA: ventas
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Registra la transacción finalizada entre dos usuarios. Dispara triggers de stock y gamificación.
+ATRIBUTOS:
+  - id (PK): Identificador de la venta (factura interna).
+  - id_publicacion (FK): Qué se vendió.
+  - id_chat_origen (FK): En qué chat se acordó la venta (puede ser NULL si fue compra directa).
+  - id_comprador (FK), id_vendedor (FK): Actores de la transacción.
+  - precio_final: El monto real pagado (puede diferir del precio de lista si hubo regateo).
+  - fecha_venta: Momento exacto de la operación.
+
+8. TABLA: calificaciones
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Sistema de reputación. Almacena la opinión posterior a una venta.
+ATRIBUTOS:
+  - id (PK): Identificador.
+  - id_venta (FK, UNIQUE): Relación 1:1 con ventas. Evita duplicar calificaciones por la misma operación.
+  - id_usuario_calificado (FK): A quién se está juzgando.
+  - calificado_rol (ENUM): 'Vendedor' o 'Comprador'. Define qué promedio afectar.
+  - puntuacion, comentario, fecha_calificacion.
+
+9. TABLA: chats
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Cabecera de las conversaciones privadas entre usuarios sobre un producto.
+ATRIBUTOS:
+  - id (PK): Identificador del hilo de conversación.
+  - id_publicacion (FK): Sobre qué producto hablan.
+  - id_usuario_comprador (FK), id_usuario_vendedor (FK): Participantes.
+  - estado (ENUM): 'Activo', 'Archivado' o 'Vendido'.
+  - fecha_ultima_actividad: Usado para ordenar la bandeja de entrada.
+
+10. TABLA: mensajes
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Contenido individual de cada chat.
+ATRIBUTOS:
+  - id (PK): ID del mensaje.
+  - id_chat (FK): A qué conversación pertenece.
+  - id_usuario_envia (FK): Autor del mensaje.
+  - contenido: Texto.
+  - leido (TINYINT): Bandera (0/1) para notificaciones de "No leídos".
+
+11. TABLA: notificaciones
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Buzón de alertas para el usuario.
+ATRIBUTOS:
+  - id (PK): Identificador.
+  - id_usuario_destino (FK): Quién recibe la alerta.
+  - id_tipo (FK): Relación con 'tipo_notificacion'. Define el ícono y texto base.
+  - id_venta (FK), id_chat (FK), id_publicacion (FK): Referencias polimórficas NULLABLES. Solo se llena la que corresponde al contexto de la notificación, permitiendo hacer clic en la app para ir al destino.
+  - leida: Fecha de lectura (NULL si no se leyó).
+
+12. TABLA: tipo_notificacion
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Catálogo maestro de tipos de alertas.
+ATRIBUTOS:
+  - id (PK), objetivo (ENUM: SOCIAL, VENTA, etc), nombre_clave, plantilla_texto, icono.
+
+13. TABLA: niveles
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Reglas de gamificación.
+ATRIBUTOS:
+  - nivel (PK): El número de nivel (1, 2, 3...).
+  - xp_necesaria: Cuánta experiencia se requiere para alcanzarlo.
+  - nombre_nivel: Título (ej: "Novato").
+
+14. TABLA: configuracion
+--------------------------------------------------------------------------------
+DESCRIPCIÓN: Tabla Clave-Valor para parámetros globales del sistema.
+ATRIBUTOS:
+  - clave (PK): Ej: 'COMPRAS_PARA_VERIFICACION'.
+  - valor: Ej: '5'. Permite cambiar reglas de negocio sin tocar código.
+
+15. TABLAS DE SOPORTE / AUDITORÍA
+--------------------------------------------------------------------------------
+  - bitacora_admin: Historial inmutable de acciones de administradores (quién baneó a quién, quién borró qué).
+  - bitacora_admin_acciones: Diccionario de acciones permitidas para la bitácora.
+  - reportes, reportes_motivos, reporte_usuario, reporte_publicacion: Sistema de denuncias de usuarios.
+  - imagen_publicacion: Galería de fotos (URL) de los productos.
+  - favoritos: Lista de deseos de los usuarios (Relación N:N entre usuarios y publicaciones).
+
+================================================================================
+PARTE 2: VISTAS (VIEWS)
+================================================================================
+Objetos virtuales que simplifican consultas complejas.
+
+1. VISTA: vista_uniformes
+--------------------------------------------------------------------------------
+FUNCIONAMIENTO: Realiza un JOIN entre 'publicacion', 'publicacion_uniforme', 'categoria', 'colegio' y 'talles'.
+PARA QUÉ SIRVE: Permite al backend consultar todos los datos de un uniforme (precio, colegio, talle, nombre de categoría) en una sola línea, sin escribir los JOINs manualmente cada vez. Filtra automáticamente los eliminados.
+
+2. VISTA: vista_objetos
+--------------------------------------------------------------------------------
+FUNCIONAMIENTO: Realiza un JOIN simple entre 'publicacion' y 'categoria'.
+PARA QUÉ SIRVE: Provee una lista rápida de productos genéricos con su nombre de categoría resuelto.
+
+================================================================================
+PARTE 3: TRIGGERS (DISPARADORES AUTOMÁTICOS)
+================================================================================
+Lógica de negocio que se ejecuta automáticamente ante cambios en las tablas.
+
+1. TRIGGER: trg_cerrar_publicacion_al_vender
+--------------------------------------------------------------------------------
+MOMENTO: AFTER INSERT ON ventas
+FUNCIONAMIENTO:
+  1. Detecta que se insertó una nueva fila en 'ventas'.
+  2. Busca la publicación asociada en la tabla 'publicacion'.
+  3. Cambia su estado a 'Vendido' y establece fecha_eliminacion.
+  4. Si la venta vino de un chat, cambia el estado del chat a 'Vendido'.
+OBJETIVO: Control de stock automático. Evita que un producto se venda dos veces.
+
+2. TRIGGER: trg_verificar_usuario_por_compras
+--------------------------------------------------------------------------------
+MOMENTO: AFTER INSERT ON ventas
+FUNCIONAMIENTO:
+  1. Consulta la tabla 'configuracion' para saber el límite necesario (ej: 5).
+  2. Cuenta cuántas ventas históricas tiene el comprador.
+  3. Si alcanza el límite, actualiza 'usuarios.es_verificado = 1'.
+  4. Inserta una notificación de tipo 'USUARIO_VERIFICADO'.
+OBJETIVO: Automatizar la confianza y seguridad del sitio.
+
+3. TRIGGER: trg_actualizar_nivel_por_venta
+--------------------------------------------------------------------------------
+MOMENTO: AFTER INSERT ON ventas
+FUNCIONAMIENTO:
+  1. Suma XP (ej: 25 puntos) al Comprador y al Vendedor.
+  2. Consulta la tabla 'niveles' para ver si la nueva XP alcanza para un nuevo nivel.
+  3. Si suben de nivel, actualiza la tabla 'usuarios' e inserta notificaciones de 'NIVEL_SUBIDO'.
+OBJETIVO: Gamificación y fidelización de usuarios.
+
+4. TRIGGER: trg_actualizar_promedio_calificacion
+--------------------------------------------------------------------------------
+MOMENTO: AFTER INSERT ON calificaciones
+FUNCIONAMIENTO:
+  1. Detecta el rol (¿Se calificó al vendedor o al comprador?).
+  2. Calcula el promedio matemático (AVG) de todas las calificaciones de ese usuario.
+  3. Actualiza las columnas caché (calificacion_vendedor_promedio) en la tabla 'usuarios'.
+OBJETIVO: Mantener la reputación actualizada en tiempo real sin recálculos costosos en cada lectura.
+
+================================================================================
+PARTE 4: PROCEDIMIENTOS ALMACENADOS (STORED PROCEDURES)
+================================================================================
+Funciones complejas que encapsulan lógica administrativa o transaccional.
+
+1. SP: sp_admin_crear_publicacion_prueba
+--------------------------------------------------------------------------------
+PARÁMETROS: Datos del producto, tipo ('Uniforme'/'Objeto'), IDs específicos.
+FUNCIONAMIENTO:
+  1. Verifica si el usuario es Admin.
+  2. Inserta los datos base en 'publicacion'.
+  3. Verifica el parámetro 'tipo'. Si es 'Uniforme', inserta los datos extra (colegio, talle) en 'publicacion_uniforme'.
+  4. Registra la acción en 'bitacora_admin'.
+OBJETIVO: Centralizar la creación de productos asegurando la integridad de las tablas padre/hija.
+
+2. SP: sp_admin_banear_usuario
+--------------------------------------------------------------------------------
+PARÁMETROS: ID admin, ID usuario a banear, Motivo.
+FUNCIONAMIENTO:
+  1. Realiza un "Soft Delete" en la tabla 'usuarios' (pone fecha_eliminacion).
+  2. Busca todas las publicaciones activas de ese usuario y las desactiva.
+  3. Registra el baneo en 'bitacora_admin'.
+OBJETIVO: Herramienta de moderación segura que deshabilita al usuario y su stock en un solo paso.
+
+3. SP: sp_admin_hard_delete_publicacion
+--------------------------------------------------------------------------------
+PARÁMETROS: ID admin, ID publicación.
+FUNCIONAMIENTO:
+  1. Borra físicamente (DELETE) en cascada inversa:
+     - Primero dependencias (fotos, favoritos, preguntas, chats).
+     - Luego tabla hija (publicacion_uniforme).
+     - Finalmente tabla padre (publicacion).
+  2. Registra la acción en bitácora.
+OBJETIVO: Limpieza profunda de contenido basura o ilegal.
+
+4. SP: sp_crear_calificacion
+--------------------------------------------------------------------------------
+PARÁMETROS: ID venta, ID usuario que opina, puntuación, comentario.
+FUNCIONAMIENTO:
+  1. Analiza la venta para determinar quién es quién (¿Quién fue el comprador? ¿Quién el vendedor?).
+  2. Define automáticamente el rol 'calificado_rol'.
+  3. Inserta en la tabla 'calificaciones'.
+OBJETIVO: Evita que el frontend tenga que calcular la lógica de roles, reduciendo errores.
+
+5. SP: sp_reporte_compras_por_usuario
+--------------------------------------------------------------------------------
+PARÁMETROS: Rango de fechas, Categoría (opcional).
+FUNCIONAMIENTO:
+  1. Une tablas ventas, usuarios y publicacion.
+  2. Filtra por fechas y categoría.
+  3. Agrupa por usuario y suma el dinero gastado.
+OBJETIVO: Generar métricas de negocio.
+
+================================================================================
+PARTE 5: EVENTOS (TAREAS PROGRAMADAS)
+================================================================================
+Procesos que se ejecutan solos en el servidor según un horario.
+
+1. EVENTO: ev_notificar_mensajes_no_leidos
+--------------------------------------------------------------------------------
+FRECUENCIA: Todos los días a las 08:00 AM.
+FUNCIONAMIENTO:
+  1. Busca en la tabla 'mensajes' aquellos con leido=0.
+  2. Agrupa por chat y usuario destino.
+  3. Genera una notificación en la tabla 'notificaciones' avisando "Tienes mensajes sin leer".
+OBJETIVO: Re-enganchar usuarios que abandonaron el chat (Retention).
+
+2. EVENTO: ev_revisar_publicaciones_antiguas
+--------------------------------------------------------------------------------
+FRECUENCIA: Todos los días a las 03:00 AM.
+FUNCIONAMIENTO:
+  1. Busca publicaciones con estado 'Activo' creadas hace más de 6 meses.
+  2. Cambia su estado a 'Necesita Revision'.
+OBJETIVO: Mantener el catálogo fresco y evitar que se muestren productos abandonados.
+
+3. EVENTO: ev_limpieza_publicaciones_soft_delete
+--------------------------------------------------------------------------------
+FRECUENCIA: Todos los días a las 05:00 AM.
+FUNCIONAMIENTO:
+  1. Lee la configuración 'MESES_PARA_HARD_DELETE' (ej: 6 meses).
+  2. Busca publicaciones eliminadas lógicamente hace más de ese tiempo.
+  3. Las borra físicamente de la base de datos junto con sus dependencias.
+OBJETIVO: Mantenimiento automático para liberar espacio en disco.
+
+================================================================================
+PARTE 6: ÍNDICES (OPTIMIZACIÓN)
+================================================================================
+
+1. ÍNDICE: idx_filtro_rapido
+--------------------------------------------------------------------------------
+TABLA: publicacion
+COLUMNAS: (id_categoria, estado, precio)
+FUNCIONAMIENTO: Crea una estructura de árbol ordenada por estos tres campos.
+OBJETIVO: Acelera drásticamente las búsquedas más comunes de la página (ej: "Ver Uniformes Activos ordenados por Precio"). Sin este índice, la base de datos tendría que leer todos los productos uno por uno.

@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CompraRepository extends JpaRepository<Compra, Integer> {
-    @Query("SELECT c FROM Compra c WHERE c.id_comprador = :idComprador")
-    List<Compra> findByIdComprador(@Param("idComprador") int idComprador);
+    List<Compra> findByIdComprador(int idComprador);
 }

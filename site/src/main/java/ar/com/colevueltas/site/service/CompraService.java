@@ -1,5 +1,6 @@
 package ar.com.colevueltas.site.service;
 
+import ar.com.colevueltas.site.dto.CompraNuevaDTO;
 import ar.com.colevueltas.site.dto.PublicacionDTO;
 import ar.com.colevueltas.site.model.Chat;
 import ar.com.colevueltas.site.model.Compra;
@@ -12,6 +13,7 @@ import ar.com.colevueltas.site.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import ar.com.colevueltas.site.repository.ChatRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +30,7 @@ public class CompraService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Compra create(int idComprador, CompraDTO dto) {
+    public Compra create(int idComprador, CompraNuevaDTO dto) {
         Chat chat = chatRepository.findById(dto.getId_chat_origen())
                 .orElseThrow(() -> new RuntimeException("El chat no existe"));
 
@@ -46,7 +48,7 @@ public class CompraService {
         Compra compra = new Compra();
         compra.setId_chat_origen(dto.getId_chat_origen());
         compra.setId_publicacion(chat.getId_publicacion());
-        compra.setId_comprador(idComprador);
+        compra.setIdComprador(idComprador);
         compra.setId_vendedor(chat.getId_usuario_vendedor());
         compra.setPrecio_final(dto.getPrecio_final());
         compra.setPunto_entrega(dto.getPunto_entrega());
@@ -68,16 +70,21 @@ public class CompraService {
         // Trae todas las compras del usuario
         List<Compra> compras = repository.findByIdComprador(idComprador);
 
-        // Convertir cada Compra a CompraDTO
-        return compras.stream().map(compra -> {
+        List<CompraDTO> lista = new ArrayList<>();
+
+        for (Compra compra : compras) {
             CompraDTO dto = new CompraDTO();
             dto.setId(compra.getId());
             dto.setId_chat_origen(compra.getId_chat_origen());
             dto.setPrecio_final(compra.getPrecio_final());
             dto.setPunto_entrega(compra.getPunto_entrega());
             dto.setFecha_venta(compra.getFecha_venta());
-            return dto;
-        }).toList();
+
+            lista.add(dto);
+        }
+
+        return lista;
+
     }
 
 

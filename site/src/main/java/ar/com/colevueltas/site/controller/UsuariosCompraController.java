@@ -1,5 +1,6 @@
 package ar.com.colevueltas.site.controller;
 
+import ar.com.colevueltas.site.dto.CompraNuevaDTO;
 import ar.com.colevueltas.site.dto.PublicacionDTO;
 import ar.com.colevueltas.site.model.Compra;
 import ar.com.colevueltas.site.dto.CompraDTO;
@@ -26,7 +27,7 @@ public class UsuariosCompraController {
     private CompraRepository repository;
 
     @PostMapping
-    public Compra createCompra(@PathVariable int id, @RequestBody CompraDTO dto){
+    public Compra createCompra(@PathVariable int id, @RequestBody CompraNuevaDTO dto){
         return compraService.create(id, dto);
     }
 
