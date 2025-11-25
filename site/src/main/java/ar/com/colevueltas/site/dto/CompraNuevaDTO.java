@@ -1,11 +1,20 @@
 package ar.com.colevueltas.site.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public class CompraNuevaDTO {
+    @NotNull(message = "El chat de origen es obligatorio")
     private Integer id_chat_origen;
+
+    @NotNull(message = "El precio final es obligatorio")
     private Double precio_final;
+
+    @NotEmpty(message = "El punto de entrega es obligatorio")
     private String punto_entrega;
+
     private LocalDateTime fecha_venta;
 
     public CompraNuevaDTO() {

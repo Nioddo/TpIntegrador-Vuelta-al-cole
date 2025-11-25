@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueltaAlCole - Home</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/83480b7348.js" crossorigin="anonymous"></script>
+    <!-- Estilos Personalizados -->
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+
+    <!-- HEADER 1: INVITADO (Visible por defecto) -->
+<header id="header-guest" class="bg-white border-bottom sticky-top transition-header">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-cart4 text-primary fs-1"></i>
+            </a>
+            <!-- Botones Login -->
+            <div>
+                <!-- Al hacer click aquí, activamos la función JS login() -->
+                <button class="btn btn-outline-dark me-2 fw-bold" onclick="login()">Iniciar sesion</button>
+                <button class="btn btn-primary fw-bold">Registrarse</button>
+            </div>
+        </div>
+        <!-- Navegación -->
+        <nav class="mt-3">
+            <ul class="nav">
+                <li class="nav-item"><a href="#" class="nav-link text-secondary ps-0">Inicio</a></li>
+                 <!-- ITEM UNIFORMES CON DROPDOWN -->
+                                <li class="nav-item dropdown dropdown-hover">
+                    <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" aria-expanded="false">
+                        Uniformes
+                    </a>
+                    <!-- Menú Principal -->
+                    <ul class="dropdown-menu rounded-3 shadow-sm border-0 mt-0">
+                        
+                        <!-- Item con Submenú (Remera) -->
+                        <li class="position-relative dropend"> 
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                     <!-- <i class="fa-solid fa-shirt text-primary opacity-75 fs-5 me-2"></i> -->
+                                    <span class="fw-normal text-secondary-emphasis">Remera</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                            
+                            <!-- Submenú (Manga Corta/Larga) -->
+                            <ul class="dropdown-menu submenu rounded-3 shadow-sm border-0">
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga corta</a></li>
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga larga</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Otros Items -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Chomba</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Item Pantalon con flecha (si tuviera submenú) -->
+                        <li class="position-relative dropend">
+                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                    
+                                    <span class="fw-normal text-secondary-emphasis">Pantalon</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-socks text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Zapatillas/Medias</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-vest-patches text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Campera</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Buzo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Objetos</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Vender</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Ayuda</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER 2: USUARIO LOGUEADO (Oculto por defecto con d-none) -->
+<header id="header-user" class="bg-white border-bottom sticky-top transition-header d-none">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Logo -->
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-cart4 text-primary fs-1"></i>
+            </a>
+
+            <!-- Panel de Usuario (Derecha) -->
+            <div class="d-flex align-items-center gap-3">
+                
+                <!-- Botón VENDER -->
+                <button class="btn btn-primary fw-bold rounded-pill px-4">VENDER</button>
+                
+                <!-- Iconos de Notificaciones -->
+                <a href="#" class="text-dark fs-4"><i class="bi bi-bell"></i></a>
+                <a href="#" class="text-dark fs-4"><i class="bi bi-heart"></i></a>
+
+                <!-- Dropdown de Perfil (Avatar) -->
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle no-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- Avatar Circular con Iniciales -->
+                        <div class="user-avatar bg-dark text-white rounded-circle d-flex justify-content-center align-items-center me-1">
+                            TM
+                        </div>
+                        <i class="bi bi-chevron-down text-secondary small"></i>
+                    </a>
+
+                    <!-- Menú Desplegable -->
+                    <ul class="dropdown-menu dropdown-menu-end shadow rounded-4 border-0 mt-2 p-2" style="min-width: 240px;">
+                        
+                        <!-- Mi cuenta -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="perfilUsuario.html">
+                                <div class="icon-box me-3"><i class="bi bi-person-fill"></i></div>
+                                <span class="fw-medium">Mi cuenta</span>
+                            </a>
+                        </li>
+
+                        <!-- Reportes (Estilo seleccionado/grisáceo) -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-exclamation-circle-fill text-dark"></i></div>
+                                <span class="fw-medium">Reportes</span>
+                            </a>
+                        </li>
+
+                        <!-- Mensajes -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-envelope"></i></div>
+                                <span class="fw-medium">Mensajes</span>
+                            </a>
+                        </li>
+
+                        <!-- Publicaciones -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-card-list"></i></div>
+                                <span class="fw-medium">Publicaciones</span>
+                            </a>
+                        </li>
+
+                        <!-- Nueva Publicación -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-tag-fill"></i></div>
+                                <span class="fw-medium">Nueva publicacion</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegación (Replicada para que se mantenga al loguearse) -->
+        <nav class="mt-3">
+            <ul class="nav">
+                <li class="nav-item"><a href="#" class="nav-link text-secondary ps-0">Inicio</a></li>
+                <li class="nav-item dropdown dropdown-hover">
+                    <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" aria-expanded="false">
+                        Uniformes
+                    </a>
+                    <!-- Menú Principal -->
+                    <ul class="dropdown-menu rounded-3 shadow-sm border-0 mt-0">
+                        
+                        <!-- Item con Submenú (Remera) -->
+                        <li class="position-relative dropend"> 
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                     <!-- <i class="fa-solid fa-shirt text-primary opacity-75 fs-5 me-2"></i> -->
+                                    <span class="fw-normal text-secondary-emphasis">Remera</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                            
+                            <!-- Submenú (Manga Corta/Larga) -->
+                            <ul class="dropdown-menu submenu rounded-3 shadow-sm border-0">
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga corta</a></li>
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga larga</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Otros Items -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Chomba</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Item Pantalon con flecha (si tuviera submenú) -->
+                        <li class="position-relative dropend">
+                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                    
+                                    <span class="fw-normal text-secondary-emphasis">Pantalon</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-socks text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Zapatillas/Medias</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-vest-patches text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Campera</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Buzo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Objetos</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Vender</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Ayuda</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+    <!-- Hero Section -->
+    <section class="container text-center mt-5">
+        <h1 class="fw-bold display-5 mb-0">VueltaAlCole</h1>
+        <h1 class="text-primary fw-bold mb-4">Todo lo que necesitas, en un lugar</h1>
+        
+        <!-- Buscador -->
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="input-group mb-3 search-bar-container">
+                    <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" class="form-control bg-light border-0 rounded-end-pill py-2" placeholder="Buscar...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categorias Objetos y Uniformes -->
+    <section class="container mt-4 mb-5">
+        <div class="row g-4">
+            <!-- Objetos -->
+            <div class="col-md-6">
+                <div class="card category-card border-0 text-white overflow-hidden rounded-4">
+                    <img src="/imagenes/homeObjetos.jpg" class="card-img" alt="Objetos">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center bg-overlay">
+                        <i class="bi bi-journal mb-2 text-primary opacity-75" style="font-size: 6rem;"></i>
+                        <h2 class="fw-bold display-5 h2-uni-obj">OBJETOS</h2>
+                        <button class="fw-bold btn btn-dark mt-2 px-4">Explorar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Uniformes -->
+            <div class="col-md-6">
+                <div class="card category-card border-0 text-white overflow-hidden rounded-4">
+                    <img src="/imagenes/homeUniforme.png" class="card-img" alt="Uniformes">
+                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center bg-overlay">
+                        <i class="fa-solid fa-shirt mb-2 text-primary opacity-75" style="font-size: 6rem;"></i>
+                        <h2 class="fw-bold display-5 h2-uni-obj">UNIFORMES</h2>
+                        <button class="fw-bold btn btn-dark mt-2 px-4">Explorar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como funciona -->
+    <section class="container text-center my-5 py-4">
+        <h3 class="fw-bold mb-3">Cómo funciona</h3>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">
+            Explora categorías, busca artículos y conéctate con vendedores para comprar o vender esenciales escolares de forma fácil y segura.
+        </p>
+    </section>
+
+    <!-- Colegios -->
+    <section class="container text-center mb-5">
+        <h3 class="fw-bold mb-4">Algunos de nuestros colegios</h3>
+        <div class="row justify-content-center g-4">
+            <!-- Colegio 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm school-card p-4">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="school-logo mb-3 border border-success rounded p-2">
+                            <img src="/imagenes/logoDevoto.png" alt="Logo Devoto" class="img-fluid" style="width:64px; height:64px; object-fit:contain;">
+                        </div>
+                        <small class="text-primary fw-bold">Jardín-Primaria-Secundaria</small>
+                        <h5 class="fw-bold mt-2">Instituto Tomas Devoto</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Colegio 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm school-card p-4">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="school-logo mb-3 text-warning border border-primary rounded p-2">
+                            <img src="/imagenes/logoPoli.png" alt="Logo Devoto" class="img-fluid" style="width:64px; height:64px; object-fit:contain;">
+                        </div>
+                        <small class="text-primary fw-bold">Secundaria</small>
+                        <h5 class="fw-bold mt-2">Instituto Politecnico Modelo</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Proximamente -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm school-card p-4">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="school-logo mb-3 text-warning border border-warning rounded p-2 bg-primary">
+                            <i class="bi bi-mortarboard-fill fs-1 text-warning"></i>
+                        </div>
+                        <small class="text-primary fw-bold">Jardín-Primaria-Secundaria</small>
+                        <h5 class="fw-bold mt-2">PROXIMAMENTE</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publicaciones Destacadas (Carrusel) -->
+    <section class="container mb-5 position-relative">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0">Publicaciones destacadas</h3>
+            <!-- Botones de navegación manual -->
+            <div class="d-none d-md-block">
+                <button class="btn btn-outline-dark rounded-circle me-2" id="scrollLeftBtn">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="btn btn-outline-dark rounded-circle" id="scrollRightBtn">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenedor del Carrusel -->
+        <div class="products-carousel-container d-flex gap-4 overflow-auto py-2" id="productsCarousel">
+            
+            <!-- Card 1 -->
+            <div class="card product-card-custom border-0 flex-shrink-0">
+                <div class="product-img-box rounded-3 position-relative">
+                    <a href="producto.html"><img src="/imagenes/1.png" alt="Zapatilla"></a>
+                </div>
+                <div class="card-body px-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Uniforme</h5>
+                            <small class="text-secondary fw-semibold">42</small>
+                        </div>
+                        <button class="btn btn-link text-dark p-0 btn-fav text-decoration-none">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-2">
+                        <span class="text-decoration-line-through text-secondary small">$20.000</span>
+                        <span class="fw-bold text-dark">$10.000</span>
+                        <span class="text-success fw-bold small">50% OFF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card product-card-custom border-0 flex-shrink-0">
+                <div class="product-img-box rounded-3 position-relative">
+                    <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Shorts">
+                </div>
+                <div class="card-body px-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Uniforme</h5>
+                            <small class="text-secondary fw-semibold">M</small>
+                        </div>
+                        <button class="btn btn-link text-dark p-0 btn-fav text-decoration-none">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-2">
+                        <span class="text-decoration-line-through text-secondary small">$25.000</span>
+                        <span class="fw-bold text-dark">$12.500</span>
+                        <span class="text-success fw-bold small">50% OFF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card product-card-custom border-0 flex-shrink-0">
+                <div class="product-img-box rounded-3 position-relative">
+                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Remera">
+                </div>
+                <div class="card-body px-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Uniforme</h5>
+                            <small class="text-secondary fw-semibold">S</small>
+                        </div>
+                        <button class="btn btn-link text-dark p-0 btn-fav text-decoration-none">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-2">
+                        <span class="text-decoration-line-through text-secondary small">$15.000</span>
+                        <span class="fw-bold text-dark">$7.500</span>
+                        <span class="text-success fw-bold small">50% OFF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card product-card-custom border-0 flex-shrink-0">
+                <div class="product-img-box rounded-3 position-relative">
+                    <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Zapato">
+                </div>
+                <div class="card-body px-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Uniforme</h5>
+                            <small class="text-secondary fw-semibold">38</small>
+                        </div>
+                        <button class="btn btn-link text-dark p-0 btn-fav text-decoration-none">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-2">
+                        <span class="text-decoration-line-through text-secondary small">$28.000</span>
+                        <span class="fw-bold text-dark">$14.000</span>
+                        <span class="text-success fw-bold small">50% OFF</span>
+                    </div>
+                </div>
+            </div>
+             
+            <!-- Card 5 (Extra para demostrar el scroll) -->
+            <div class="card product-card-custom border-0 flex-shrink-0">
+                <div class="product-img-box rounded-3 position-relative">
+                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Buzo">
+                </div>
+                <div class="card-body px-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="fw-bold mb-0 text-dark">Uniforme</h5>
+                            <small class="text-secondary fw-semibold">L</small>
+                        </div>
+                        <button class="btn btn-link text-dark p-0 btn-fav text-decoration-none">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-2">
+                        <span class="text-decoration-line-through text-secondary small">$30.000</span>
+                        <span class="fw-bold text-dark">$15.000</span>
+                        <span class="text-success fw-bold small">50% OFF</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container-fluid border-top pt-5 pb-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <i class="bi bi-cart4 text-primary fs-1"></i>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Contacto</h6>
+                    <ul class="list-unstyled text-muted small">
+                        <li>Email: soporte@vueltaalcole.com</li>
+                        <li>Teléfono: +1 555 123 4567</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Preguntas frecuentes</h6>
+                    <ul class="list-unstyled text-muted small">
+                        <li><a href="#" class="text-decoration-none text-muted">Cómo funciona</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Cómo Reporto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Siguenos</h6>
+                    <div class="d-flex gap-3 text-primary">
+                        <a href="#" class="text-decoration-none"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="bi bi-twitter-x fs-5"></i></a>
+                    </div>
+                    <ul class="list-unstyled text-muted small mt-2">
+                        <li>Instagram</li>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts Personalizados -->
+    <script src="home.js"></script>
+</body>
+</html>

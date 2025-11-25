@@ -1,0 +1,436 @@
+/* Fuente general (Bootstrap usa system fonts por defecto, esto es opcional) */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #212529;
+}
+
+/* Color primario personalizado para parecerse al azul de la imagen */
+.text-primary {
+    color: #0d47a1 !important; /* Un azul más oscuro y serio */
+}
+.btn-primary {
+    background-color: #0d47a1;
+    border-color: #0d47a1;
+}
+.btn-outline-dark {
+    border-width: 2px;
+}
+
+/* Navegación */
+.nav-link {
+    font-weight: 500;
+}
+.nav-link:hover {
+    color: #0d47a1 !important;
+}
+
+/* Buscador */
+.search-bar-container input:focus {
+    box-shadow: none;
+    background-color: #f8f9fa;
+}
+
+/* Tarjetas de Categorías (Banners) */
+.category-card {
+    height: 600px; /* Altura fija para los banners */
+}
+
+.category-card img {
+    height: 100%;
+    object-fit: cover;
+}
+/* Capa para oscurecer ligeramente la imagen y que se lea el texto */
+.h2-uni-obj {
+    background: rgba(255, 255, 255, 0.4); /* Ligeramente blanco/transparente como en el diseño */
+    color: black;
+}
+/* Estilo específico para los banners que parecen tener un fondo grisaceo/azul en la imagen */
+.category-card:first-child img {
+    filter: brightness(0.9);
+}
+
+/* Tarjetas de Colegios */
+.school-card {
+    border-radius: 15px;
+    border-bottom: 5px solid #0d47a1 !important; /* Borde inferior azul grueso */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.school-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.school-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 90px;
+}
+
+/* Tarjetas de Productos */
+.product-card img {
+    height: 250px;
+    object-fit: cover;
+    background-color: #f0f0f0; /* Fondo gris claro para las fotos */
+}
+.product-card .text-success {
+    font-weight: 800;
+}
+
+/* Footer Icons */
+.bi-instagram, .bi-facebook, .bi-twitter-x {
+    color: #0d47a1;
+}
+
+/* header */
+/* Lógica para Dropdown al hacer HOVER (Escritorio) */
+@media (min-width: 992px) {
+    /* Hace que el menú principal aparezca al pasar el mouse sobre "Uniformes" */
+    .dropdown-hover:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0; /* Ajuste visual */
+    }
+}
+
+/* Estilos para el Submenú Anidado (Nivel 2) */
+.dropdown-menu li {
+    position: relative;
+}
+
+/* El submenú está oculto por defecto */
+.dropdown-menu .submenu {
+    display: none;
+    position: absolute;
+    left: 100%; /* Lo mueve a la derecha del padre */
+    top: -5px;  /* Alineación superior */
+    margin-left: 0px;
+}
+
+/* Al hacer hover sobre el item padre (ej: Remera), muestra el submenú */
+.dropdown-menu li:hover > .submenu {
+    display: block;
+}
+
+/* Estilos visuales para parecerse a la imagen */
+.dropdown-item {
+    font-size: 0.95rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: #555;
+}
+
+/* Efecto Hover gris claro como en la imagen */
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+/* Ajuste de la flechita > */
+.bi-chevron-right {
+    color: #aaa;
+}
+
+/* Sombra suave para los menús */
+.dropdown-menu {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    padding: 0.5rem 0; /* Padding vertical dentro de la caja blanca */
+}
+
+
+/* Estilo del Avatar (Círculo Negro con letras) */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border: 2px solid transparent; /* Espacio para evitar saltos */
+}
+
+/* Quitar la flecha por defecto de Bootstrap para poner la nuestra manual */
+.dropdown-toggle.no-arrow::after {
+    display: none;
+}
+
+/* Iconos dentro del dropdown */
+.icon-box {
+    width: 24px; 
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Ajuste visual para los items del menú */
+.dropdown-menu li a:hover {
+    background-color: #f8f9fa; /* Gris muy claro al pasar mouse */
+}
+
+/* Transición suave (opcional) */
+.transition-header {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+
+
+/* --- ESTILOS DEL CARRUSEL DE PRODUCTOS --- */
+
+/* Contenedor Scrollable */
+.products-carousel-container {
+    scroll-behavior: smooth; /* Scroll suave al hacer click en botones */
+    scrollbar-width: none;   /* Ocultar scrollbar en Firefox */
+    -ms-overflow-style: none;  /* Ocultar scrollbar en IE/Edge */
+    padding-bottom: 10px; /* Espacio para la sombra hover */
+}
+
+/* Ocultar scrollbar en Chrome/Safari/Opera */
+.products-carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Estilo de la Tarjeta Personalizada */
+.product-card-custom {
+    width: 260px; /* Ancho fijo para mantener uniformidad */
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.product-card-custom:hover {
+    transform: translateY(-3px);
+}
+
+/* Caja de la imagen */
+.product-img-box {
+    height: 320px; /* Altura vertical alta como en la foto de referencia */
+    background-color: #f4f4f4; /* Fondo gris claro */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la foto llene el espacio */
+    mix-blend-mode: multiply; /* Truco opcional: si el fondo de la foto es blanco, se mezcla con el gris */
+}
+
+/* Botón de Favorito */
+.btn-fav i {
+    transition: color 0.2s;
+}
+.btn-fav:hover i {
+    color: #dc3545; /* Rojo al pasar el mouse */
+}
+
+/* Ajuste responsive para movil */
+@media (max-width: 768px) {
+    .product-card-custom {
+        width: 200px;
+    }
+    .product-img-box {
+        height: 240px;
+    }
+}
+/* Forzar que la caja tenga un alto y que la imagen la cubra sin dejar espacio */
+.product-img-box {
+    height: 220px;         /* ajustar según lo que necesites */
+    overflow: hidden;
+    line-height: 0;        /* elimina el espacio en línea por imagen inline */
+    display: block;
+}
+
+/* Enlazamos el <a> para que ocupe toda la caja */
+.product-img-box > a {
+    display: block;
+    height: 100%;
+}
+
+/* Imagen ocupa toda la caja y se recorta proporcionalmente */
+.product-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* rellena y recorta manteniendo proporción */
+    display: block;        /* elimina espacios en línea */
+    vertical-align: middle;
+}
+
+/* Opcional: altura mayor en pantallas más grandes */
+@media (min-width: 768px) {
+  .product-img-box { height: 280px; }
+}
+
+
+
+/* --- ESTILOS PAGINA PERFIL --- */
+
+/* Avatar Grande con iniciales */
+.profile-avatar-lg {
+    width: 90px;
+    height: 90px;
+    font-size: 2rem;
+    background-color: #e9ecef; /* Gris claro de bootstrap */
+    color: #495057;
+}
+
+/* Contenedor del Mapa */
+.map-container iframe {
+    pointer-events: none; /* Desactiva interacción para parecer una imagen estática */
+}
+
+/* Tarjeta de 'Mis Publicaciones' */
+.pub-list-card {
+    min-height: 250px; /* Asegura altura mínima */
+}
+
+/* Barra de Estado (ACTIVA) */
+.status-bar-active {
+    background-color: #dcfce7; /* Verde muy claro similar a la imagen */
+    color: #166534; /* Verde oscuro texto */
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Links de acción (Modificar, ver, etc) */
+.action-link:hover {
+    color: #0d47a1 !important; /* Azul primario al pasar mouse */
+    text-decoration: underline !important;
+}
+
+/* Ajuste del placeholder de imagen */
+.pub-list-card .col-md-3 .bg-light {
+    background: repeating-linear-gradient(
+        45deg,
+        #f8f9fa,
+        #f8f9fa 10px,
+        #e9ecef 10px,
+        #e9ecef 20px
+    ) !important; /* Patrón rayado sutil para simular placeholder */
+}
+
+
+
+
+
+
+
+
+
+
+/* --- ESTILOS PAGINA PRODUCTO --- */
+
+/* Wrapper de la imagen para efecto Sticky */
+/* 'top' indica a qué distancia del techo se pega */
+.sticky-wrapper {
+    position: sticky;
+    top: 175px; 
+    z-index: 10;
+}
+
+/* Dots del carrusel simulado */
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+}
+.carousel-dot.active {
+    background-color: #fff;
+    transform: scale(1.2);
+}
+
+/* El precio en la foto parece un azul/gris muy claro o un contorno, 
+   pero usaré un gris azulado grande */
+.display-6 {
+    color: #0d47a1 !important;
+}
+
+/* Input de Preguntas */
+.input-group .form-control {
+    border-right: 0;
+}
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #0d47a1;
+}
+.input-group .btn-primary {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #0d47a1;
+}
+
+/* Avatar en la tarjeta de vendedor */
+.user-avatar.fs-5 {
+    font-size: 1.25rem !important; /* Ajuste para que se vea bien el texto TM */
+}
+/* --- ESTILOS PAGINA PRODUCTO --- */
+
+/* Forzar que el carrusel sea cuadrado */
+.product-image-large {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Esto hace el cuadrado perfecto */
+    background-color: #f8f9fa;
+    position: relative;
+}
+
+/* Personalización de los Indicadores (Puntitos) de Bootstrap */
+.carousel-indicators [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: none;
+    margin: 0 4px;
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+.carousel-indicators .active {
+    background-color: #fff;
+    transform: scale(1.3); /* Efecto de crecimiento al estar activo */
+}
+
+/* Flechas del carrusel un poco más sutiles */
+.carousel-control-prev, .carousel-control-next {
+    width: 10%; /* Zona de click más angosta */
+    opacity: 0; /* Ocultas por defecto */
+    transition: opacity 0.3s;
+}
+
+/* Mostrar flechas solo al pasar el mouse sobre la foto */
+.product-image-large:hover .carousel-control-prev, 
+.product-image-large:hover .carousel-control-next {
+    opacity: 0.8;
+}
+
+/* Resto de estilos (Precio, Inputs, etc.) */
+.display-6 {
+    color: #0d47a1 !important;
+}
+
+.input-group .form-control {
+    border-right: 0;
+}
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #0d47a1;
+}
+.input-group .btn-primary {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #0d47a1;
+}
+
+.user-avatar.fs-5 {
+    font-size: 1.25rem !important;
+}
+
+
+
+
+

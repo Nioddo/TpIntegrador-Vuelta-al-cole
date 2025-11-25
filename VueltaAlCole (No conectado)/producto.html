@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueltaAlCole - Detalle Producto</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/83480b7348.js" crossorigin="anonymous"></script>
+    <!-- Estilos Personalizados -->
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+     <!-- HEADER 1: INVITADO (Visible por defecto) -->
+<header id="header-guest" class="bg-white border-bottom sticky-top transition-header">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-cart4 text-primary fs-1"></i>
+            </a>
+            <!-- Botones Login -->
+            <div>
+                <!-- Al hacer click aquí, activamos la función JS login() -->
+                <button class="btn btn-outline-dark me-2 fw-bold" onclick="login()">Iniciar sesion</button>
+                <button class="btn btn-primary fw-bold">Registrarse</button>
+            </div>
+        </div>
+        <!-- Navegación -->
+        <nav class="mt-3">
+            <ul class="nav">
+                <li class="nav-item"><a href="#" class="nav-link text-secondary ps-0">Inicio</a></li>
+                 <!-- ITEM UNIFORMES CON DROPDOWN -->
+                                <li class="nav-item dropdown dropdown-hover">
+                    <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" aria-expanded="false">
+                        Uniformes
+                    </a>
+                    <!-- Menú Principal -->
+                    <ul class="dropdown-menu rounded-3 shadow-sm border-0 mt-0">
+                        
+                        <!-- Item con Submenú (Remera) -->
+                        <li class="position-relative dropend"> 
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                     <!-- <i class="fa-solid fa-shirt text-primary opacity-75 fs-5 me-2"></i> -->
+                                    <span class="fw-normal text-secondary-emphasis">Remera</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                            
+                            <!-- Submenú (Manga Corta/Larga) -->
+                            <ul class="dropdown-menu submenu rounded-3 shadow-sm border-0">
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga corta</a></li>
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga larga</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Otros Items -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Chomba</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Item Pantalon con flecha (si tuviera submenú) -->
+                        <li class="position-relative dropend">
+                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                    
+                                    <span class="fw-normal text-secondary-emphasis">Pantalon</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-socks text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Zapatillas/Medias</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-vest-patches text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Campera</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Buzo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Objetos</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Vender</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Ayuda</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER 2: USUARIO LOGUEADO (Oculto por defecto con d-none) -->
+<header id="header-user" class="bg-white border-bottom sticky-top transition-header d-none">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Logo -->
+            <a href="#" class="text-decoration-none">
+                <i class="bi bi-cart4 text-primary fs-1"></i>
+            </a>
+
+            <!-- Panel de Usuario (Derecha) -->
+            <div class="d-flex align-items-center gap-3">
+                
+                <!-- Botón VENDER -->
+                <button class="btn btn-primary fw-bold rounded-pill px-4">VENDER</button>
+                
+                <!-- Iconos de Notificaciones -->
+                <a href="#" class="text-dark fs-4"><i class="bi bi-bell"></i></a>
+                <a href="#" class="text-dark fs-4"><i class="bi bi-heart"></i></a>
+
+                <!-- Dropdown de Perfil (Avatar) -->
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle no-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- Avatar Circular con Iniciales -->
+                        <div class="user-avatar bg-dark text-white rounded-circle d-flex justify-content-center align-items-center me-1">
+                            TM
+                        </div>
+                        <i class="bi bi-chevron-down text-secondary small"></i>
+                    </a>
+
+                    <!-- Menú Desplegable -->
+                    <ul class="dropdown-menu dropdown-menu-end shadow rounded-4 border-0 mt-2 p-2" style="min-width: 240px;">
+                        
+                        <!-- Mi cuenta -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-person-fill"></i></div>
+                                <span class="fw-medium">Mi cuenta</span>
+                            </a>
+                        </li>
+
+                        <!-- Reportes (Estilo seleccionado/grisáceo) -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-exclamation-circle-fill text-dark"></i></div>
+                                <span class="fw-medium">Reportes</span>
+                            </a>
+                        </li>
+
+                        <!-- Mensajes -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-envelope"></i></div>
+                                <span class="fw-medium">Mensajes</span>
+                            </a>
+                        </li>
+
+                        <!-- Publicaciones -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-card-list"></i></div>
+                                <span class="fw-medium">Publicaciones</span>
+                            </a>
+                        </li>
+
+                        <!-- Nueva Publicación -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 rounded-2" href="#">
+                                <div class="icon-box me-3"><i class="bi bi-tag-fill"></i></div>
+                                <span class="fw-medium">Nueva publicacion</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegación (Replicada para que se mantenga al loguearse) -->
+        <nav class="mt-3">
+            <ul class="nav">
+                <li class="nav-item"><a href="" class="nav-link text-secondary ps-0">Inicio</a></li>
+                <li class="nav-item dropdown dropdown-hover">
+                    <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" aria-expanded="false">
+                        Uniformes
+                    </a>
+                    <!-- Menú Principal -->
+                    <ul class="dropdown-menu rounded-3 shadow-sm border-0 mt-0">
+                        
+                        <!-- Item con Submenú (Remera) -->
+                        <li class="position-relative dropend"> 
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                     <!-- <i class="fa-solid fa-shirt text-primary opacity-75 fs-5 me-2"></i> -->
+                                    <span class="fw-normal text-secondary-emphasis">Remera</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                            
+                            <!-- Submenú (Manga Corta/Larga) -->
+                            <ul class="dropdown-menu submenu rounded-3 shadow-sm border-0">
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga corta</a></li>
+                                <li><a class="dropdown-item text-secondary-emphasis py-2" href="#">Manga larga</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Otros Items -->
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Chomba</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Item Pantalon con flecha (si tuviera submenú) -->
+                        <li class="position-relative dropend">
+                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                    
+                                    <span class="fw-normal text-secondary-emphasis">Pantalon</span>
+                                </div>
+                                <i class="bi bi-chevron-right text-secondary" style="font-size: 0.75rem;"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-socks text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Zapatillas/Medias</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                <!-- <i class="fa-solid fa-vest-patches text-primary opacity-75 fs-5 me-2"></i> -->
+                                <span class="fw-normal text-secondary-emphasis">Campera</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                
+                                <span class="fw-normal text-secondary-emphasis">Buzo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Objetos</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Vender</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary">Ayuda</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="container mt-4 mb-5">
+        <div class="row gx-5">
+            
+        <!-- COLUMNA IZQUIERDA: IMAGEN (Sticky) -->
+        <div class="col-lg-6 mb-4 mb-lg-0">
+                <!-- Wrapper sticky -->
+            <div class="sticky-wrapper">
+                <!-- Carrusel Bootstrap -->
+                <div id="carouselProducto" class="carousel slide product-image-large rounded-3 overflow-hidden shadow-sm" data-bs-ride="false">
+                    
+                    <!-- Indicadores (Puntitos) -->
+                    <div class="carousel-indicators mb-3">
+                        <button type="button" data-bs-target="#carouselProducto" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselProducto" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselProducto" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+
+                    <!-- Imágenes (Slides) -->
+                    <div class="carousel-inner h-100">
+                        <!-- Imagen 1 -->
+                        <div class="carousel-item active h-100">
+                            <img src="/imagenes/1.png" class="d-block w-100 h-100" alt="Foto 1" style="object-fit: cover;">
+                        </div>
+                        <!-- Imagen 2 -->
+                        <div class="carousel-item h-100">
+                            <!-- Usando placeholder o la misma imagen para probar -->
+                            <img src="/imagenes/2.jpg" class="d-block w-100 h-100" alt="Foto 2" style="object-fit: cover;">
+                        </div>
+                        <!-- Imagen 3 -->
+                        <div class="carousel-item h-100">
+                            <img src="/imagenes/3.webp" class="d-block w-100 h-100" alt="Foto 3" style="object-fit: cover;">
+                        </div>
+                    </div>
+
+                    <!-- Flechas de Control (Anterior/Siguiente) -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselProducto" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+            <!-- COLUMNA DERECHA: INFORMACIÓN (Scrollable) -->
+            <div class="col-lg-5">
+                
+                <!-- Fecha y Categoría -->
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <small class="text-muted d-block mb-1">24-Abr-2021</small>
+                        <h2 class="fw-bold mb-0 text-uppercase">CATEGORIA</h2>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <i class="bi bi-three-dots-vertical text-secondary fs-5"></i>
+                    </div>
+                </div>
+
+                <!-- Info Colegio -->
+                <div class="d-flex align-items-center mb-3 gap-1">
+                    <img src="/imagenes/logoDevoto.png" alt="Logo Devoto" style="width:34px; object-fit:contain;">
+                    <span class="text-secondary fw-normal">Instituto Tomas Devoto</span>
+                </div>
+
+                <!-- Precio -->
+                <h2 class="text-primary-light fw-light mb-4 display-6" style="color: #6c757d;">$99.999</h2>
+
+                <!-- Separador -->
+                <hr class="text-secondary opacity-25">
+
+                <!-- Descripción -->
+                <div class="mb-4">
+                    <p class="text-muted small">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                    </p>
+                </div>
+
+                <!-- Talle -->
+                <div class="mb-4">
+                    <h6 class="fw-bold small text-uppercase mb-2">TALLE</h6>
+                    <span class="d-inline-block px-3 py-1 fw-bold">S</span>
+                </div>
+
+                <hr class="text-secondary opacity-25">
+
+                <!-- Vendedor -->
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <a href="perfilUsuario.html" style="text-decoration: none;">
+                    <div class="user-avatar bg-light text-secondary rounded-circle d-flex justify-content-center align-items-center fw-bold fs-5" style="width: 50px; height: 50px;">
+                        TM
+                    </div>
+                    </a>
+                    <div>
+                        <a href="perfilUsuario.html" style="text-decoration: none;"><h6 class="mb-0 fw-bold">ThiagoML43</h6></a>
+                        <div class="text-primary small">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
+                            <span class="text-muted ms-1">(9)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ubicación (Mapa) -->
+                <div class="mb-4">
+                    <h6 class="text-primary fw-bold small text-uppercase mb-2">UBICACION</h6>
+                    <div class="map-preview rounded overflow-hidden position-relative border">
+                         <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194348.1398106965!2d-3.819620692794129!3d40.43786975962002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid%2C%20Espa%C3%B1a!5e0!3m2!1ses!2sar!4v1700000000000!5m2!1ses!2sar" 
+                            width="100%" 
+                            height="150" 
+                            style="border:0; filter: opacity(0.9);" 
+                            loading="lazy">
+                        </iframe>
+                         <!-- Icono Mapa -->
+                        <div class="position-absolute top-50 start-50 translate-middle bg-white p-1 rounded-circle shadow-sm">
+                            <i class="bi bi-geo-alt-fill text-primary fs-5"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos sobre envío (Acordeón Simple) -->
+                <div class="border-top border-bottom py-3 mb-4 cursor-pointer d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#envioInfo">
+                    <span class="fw-bold small">Datos sobre envio del vendedor</span>
+                    <i class="bi bi-chevron-down small"></i>
+                </div>
+                <div class="collapse mb-4" id="envioInfo">
+                    <p class="small text-muted">El vendedor realiza envíos a través de correo privado o entrega en punto de encuentro (Zona Devoto).</p>
+                </div>
+
+                <!-- Botón de Contacto -->
+                <div class="d-flex gap-3 align-items-center mb-5">
+                    <button class="btn btn-primary btn-lg flex-grow-1 fw-bold rounded-1" style="background-color: #0d47a1;">CONTACTAR VENDEDOR</button>
+                    <button class="btn btn-link text-dark p-0 btn-fav text-decoration-none">
+                        <i class="bi bi-heart fs-4"></i>
+                    </button>
+                </div>
+
+                <!-- SECCIÓN PREGUNTAS -->
+                <div class="mt-5">
+                    <h4 class="fw-bold mb-3 text-uppercase">PREGUNTAS</h4>
+                    
+                    <!-- Input Pregunta -->
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control border-primary" placeholder="Escribí tu pregunta...">
+                        <button class="btn btn-primary fw-bold px-4" type="button">ENVIAR</button>
+                    </div>
+
+                    <!-- Lista de Preguntas -->
+                    <div class="questions-list">
+                        <!-- Pregunta 1 -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-1 small">Pregunta uno</h6>
+                            <p class="text-muted small mb-0">
+                                - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                            </p>
+                        </div>
+                        <!-- Pregunta 2 -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-1 small">Pregunta dos</h6>
+                            <p class="text-muted small mb-0">
+                                - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Fin Columna Derecha -->
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="container-fluid border-top pt-5 pb-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <i class="bi bi-cart4 text-primary fs-1"></i>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Contacto</h6>
+                    <ul class="list-unstyled text-muted small">
+                        <li>Email: soporte@vueltaalcole.com</li>
+                        <li>Teléfono: +1 555 123 4567</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Preguntas frecuentes</h6>
+                    <ul class="list-unstyled text-muted small">
+                        <li><a href="#" class="text-decoration-none text-muted">Cómo funciona</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Cómo Reporto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Siguenos</h6>
+                    <div class="d-flex gap-3 text-primary">
+                        <a href="#" class="text-decoration-none"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="bi bi-twitter-x fs-5"></i></a>
+                    </div>
+                    <ul class="list-unstyled text-muted small mt-2">
+                        <li>Instagram</li>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>

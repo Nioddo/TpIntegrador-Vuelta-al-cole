@@ -1,8 +1,13 @@
 package ar.com.colevueltas.site.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+
 public class NuevaPreguntaDTO {
 
+    @Min(value = 1, message = "El ID de la publicación debe ser mayor que 0")
     private int idPublicacion;
+    @NotEmpty(message = "La pregunta es obligatoria")
     private String pregunta;
 
     public NuevaPreguntaDTO() {}
