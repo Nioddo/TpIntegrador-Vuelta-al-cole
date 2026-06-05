@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
         @Column(name = "id_usuario_vendedor", nullable = false)
         private int id_usuario_vendedor;
 
+        @Enumerated(EnumType.STRING)
         @Column(name = "estado", nullable = false)
         private EstadoChat estado;
 
