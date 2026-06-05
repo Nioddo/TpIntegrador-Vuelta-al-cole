@@ -5,3 +5,4 @@ DB_PASSWORD=root
 CLOUDINARY_CLOUD_NAME=tu_cloud_name
 CLOUDINARY_API_KEY=tu_api_key
 CLOUDINARY_API_SECRET=tu_api_secret
+JWT_SECRET=minimo-32-caracteres-aleatorios-cambiar-en-produccion

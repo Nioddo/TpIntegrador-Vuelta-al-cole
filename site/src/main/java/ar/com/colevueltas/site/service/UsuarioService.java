@@ -2,12 +2,14 @@ package ar.com.colevueltas.site.service;
 
 import ar.com.colevueltas.site.dto.*;
 import ar.com.colevueltas.site.globals.BadRequestException;
-import ar.com.colevueltas.site.model.ImagenPublicacion;
 import ar.com.colevueltas.site.model.Publicacion;
 import ar.com.colevueltas.site.model.Usuario;
 import ar.com.colevueltas.site.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-/*import org.springframework.security.crypto.password.PasswordEncoder;*/
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,21 +18,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    private final PasswordEncoder passwordEncoder;
     private final UsuarioRepository repository;
     private final NivelRepository nivelRepository;
     private final PublicacionRepository publicacionRepository;
     private final ImagenPublicacionRepository imagenPublicacionRepository;
 
-    public UsuarioService(UsuarioRepository repository, NivelRepository nivelRepository, PublicacionRepository publicacionRepository, ImagenPublicacionRepository imagenPublicacionRepository) {
+    public UsuarioService(PasswordEncoder passwordEncoder,
+                          UsuarioRepository repository,
+                          NivelRepository nivelRepository,
+                          PublicacionRepository publicacionRepository,
+                          ImagenPublicacionRepository imagenPublicacionRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.repository = repository;
         this.nivelRepository = nivelRepository;
         this.publicacionRepository = publicacionRepository;
         this.imagenPublicacionRepository = imagenPublicacionRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        Usuario usuario = repository.findByMail(mail)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + mail));
+        String role = usuario.isEs_admin() ? "ROLE_ADMIN" : "ROLE_USER";
+        return User.builder()
+                .username(usuario.getMail())
+                .password(usuario.getContrasenia())
+                .authorities(new SimpleGrantedAuthority(role))
+                .build();
     }
 
     public Usuario create(UsuarioCrearDTO dto){
