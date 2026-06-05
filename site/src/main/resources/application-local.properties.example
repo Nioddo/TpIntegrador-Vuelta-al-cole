@@ -1,0 +1,7 @@
+# Copiá este archivo a application-local.properties y completá con tus valores reales.
+# application-local.properties está en .gitignore — nunca lo commitees.
+
+DB_PASSWORD=root
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
